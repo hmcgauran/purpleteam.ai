@@ -25,8 +25,12 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter('readableDate', (d) => {
     if (!d) return '';
-    return DateTime.fromISO(String(d), { zone: 'utc' })
-      .toFormat('d LLLL yyyy');
+    // Eleventy passes either an ISO string (frontmatter date: 'YYYY-MM-DD')
+    // or a Date instance (resolved via the post's date field). Handle both.
+    const dt = (d instanceof Date) ? DateTime.fromJSDate(d, { zone: 'utc' })
+                                   : DateTime.fromISO(String(d), { zone: 'utc' });
+    if (!dt.isValid) return '';
+    return dt.toFormat('d LLLL yyyy');
   });
 
   eleventyConfig.addFilter('readingTime', (content) => {
