@@ -4,13 +4,12 @@ title: false
 permalink: /
 ---
 
-{% set allPosts = collections.post %}
+{% set allPosts = collections.post | sortDesc %}
+{% set featured = false %}
+{% set archive = [] %}
 {% if allPosts.length > 0 %}
-  {% set featured = allPosts[allPosts.length - 1] %}
-  {% set archive = allPosts | dropLast | reverse %}
-{% else %}
-  {% set featured = false %}
-  {% set archive = [] %}
+  {% set featured = allPosts[0] %}
+  {% set archive = allPosts | dropFirst %}
 {% endif %}
 
 <section class="masthead">
@@ -46,7 +45,7 @@ permalink: /
 <section class="archive" aria-labelledby="archive-heading">
   <p class="section-eyebrow" id="archive-heading">Archive</p>
   <ol class="archive__list">
-    {% for post in archive | reverse %}
+    {% for post in archive %}
       <li class="archive__item">
         <a class="archive__link" href="{{ post.url }}">
           <h3 class="archive__title">{{ post.data.title }}</h3>

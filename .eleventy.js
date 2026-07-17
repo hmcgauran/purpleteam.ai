@@ -52,6 +52,19 @@ module.exports = function (eleventyConfig) {
   // Drop the last item from an array (used to remove the featured post from archive).
   eleventyConfig.addFilter('dropLast', (arr) => (arr || []).slice(0, -1));
 
+  // Drop the first item from an array (the featured post, after sortDesc).
+  eleventyConfig.addFilter('dropFirst', (arr) => (arr || []).slice(1));
+
+  // Sort an array of dated objects by `date` in descending order (newest first).
+  eleventyConfig.addFilter('sortDesc', (arr) => {
+    if (!arr) return [];
+    return [...arr].sort((a, b) => {
+      const ad = a.date instanceof Date ? a.date.getTime() : new Date(a.date).getTime();
+      const bd = b.date instanceof Date ? b.date.getTime() : new Date(b.date).getTime();
+      return bd - ad;
+    });
+  });
+
   eleventyConfig.addFilter('slugify', (s) =>
     String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
   );
