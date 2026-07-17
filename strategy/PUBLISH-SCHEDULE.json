@@ -1,0 +1,121 @@
+{
+  "posts": [
+    {
+      "id": "post-1",
+      "number": 1,
+      "title": "Your Purple Team Test Failed Because Your Threat Model Is Wrong",
+      "file": "purpleteam-blog-post-1.md",
+      "publishDate": "2026-03-20",
+      "approved": true,
+      "tags": ["Purple Teaming"]
+    },
+    {
+      "id": "post-2",
+      "number": 2,
+      "title": "Detection Engineering in a Real Environment: Why Generic Rules Fail",
+      "file": "purpleteam-blog-post-2.md",
+      "publishDate": "2026-03-27",
+      "approved": true,
+      "tags": ["Purple Teaming"]
+    },
+    {
+      "id": "post-3",
+      "number": 3,
+      "title": "Why Your Red Team Tests Are Designed to Fail, And You Don't Know It",
+      "file": "purpleteam-blog-post-3.md",
+      "publishDate": "2026-04-03",
+      "approved": true,
+      "tags": ["Purple Teaming"]
+    },
+    {
+      "id": "post-4",
+      "number": 4,
+      "title": "Purple Teaming That Actually Works: A Framework for Real Collaboration",
+      "file": "purpleteam-blog-post-4.md",
+      "publishDate": "2026-04-10",
+      "approved": true,
+      "tags": ["Purple Teaming"]
+    },
+    {
+      "id": "post-5",
+      "number": 5,
+      "title": "How to Scope a Red Team Engagement That Tells You Something Real",
+      "file": "purpleteam-blog-post-5.md",
+      "publishDate": "2026-04-16",
+      "approved": true,
+      "tags": ["Red Team", "Purple Teaming", "Threat Modelling"]
+    },
+    {
+      "id": "post-6",
+      "number": 6,
+      "title": "Purple Teaming OT: Why \"We Can't Test That\" Is No Longer Acceptable",
+      "file": "purpleteam-blog-post-6.md",
+      "publishDate": "2026-04-23",
+      "approved": true,
+      "tags": ["OT Security", "Purple Teaming", "ICS", "Critical Infrastructure"]
+    },
+    {
+      "id": "post-7",
+      "number": 7,
+      "title": "The 7 Most Pointless Findings in OT Pen Tests",
+      "file": "purpleteam-blog-post-7.md",
+      "publishDate": "2026-04-30",
+      "approved": true,
+      "tags": ["OT Security", "Purple Teaming", "ICS", "Pen Testing"]
+    },
+    {
+      "id": "post-8",
+      "number": 8,
+      "title": "The Insider Threat Problem Is Not What You Think",
+      "file": "purpleteam-blog-post-8.md",
+      "publishDate": "2026-05-07",
+      "approved": true,
+      "tags": ["Insider Threat", "Detection Engineering", "Threat Modelling"]
+    },
+    {
+      "id": "post-9",
+      "number": 9,
+      "title": "Living Off the Land: Why the Best Attackers Don't Look Like Attackers",
+      "file": "purpleteam-blog-post-9.md",
+      "publishDate": "2026-05-14",
+      "approved": true,
+      "tags": ["Detection Engineering", "Red Team", "Blue Team"]
+    },
+    {
+      "id": "post-10",
+      "number": 10,
+      "title": "How to Write a Purple Team Report That Actually Gets Read",
+      "file": "purpleteam-blog-post-10.md",
+      "publishDate": "2026-06-25",
+      "approved": true,
+      "tags": ["Purple Teaming", "Red Team", "Blue Team"]
+    },
+    {
+      "id": "post-11",
+      "number": 11,
+      "title": "Adversary Emulation vs Penetration Testing: Why the Distinction Matters",
+      "file": "purpleteam-blog-post-11.md",
+      "publishDate": "2026-07-02",
+      "approved": true,
+      "tags": ["Red Team", "Purple Teaming"]
+    },
+    {
+      "id": "post-12",
+      "number": 12,
+      "title": "Purple Teaming at Scale: How It Changes When You Have 20 Blue Team Analysts",
+      "file": "purpleteam-blog-post-12.md",
+      "publishDate": "2026-07-09",
+      "approved": true,
+      "tags": ["Purple Teaming", "Detection Engineering"]
+    },
+    {
+      "id": "post-13",
+      "number": 13,
+      "title": "Building a Detection Baseline: The Work Nobody Wants to Do",
+      "file": "purpleteam-blog-post-13.md",
+      "publishDate": "2026-07-16",
+      "approved": true,
+      "tags": ["Detection Engineering", "Blue Team"]
+    }
+  ]
+}

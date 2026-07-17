@@ -1,0 +1,17 @@
+{
+  "name": "purpleteam-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PurpleTeamAI — practitioner-led publication on purple teaming and detection engineering.",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve --quiet",
+    "debug": "DEBUG=Eleventy* eleventy",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
+    "luxon": "^3.5.0"
+  }
+}
