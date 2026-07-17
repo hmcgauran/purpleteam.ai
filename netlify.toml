@@ -1,0 +1,78 @@
+# Netlify config for purpleteam.ai
+#
+# Build command: npm run build (set via package.json scripts)
+# Publish dir:   _site (set below)
+# Node version:  20 (pinned)
+
+[build]
+  command = "npm run build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Tell Netlify not to audit on every build (speeds things up).
+  NPM_FLAGS = "--prefer-offline --no-audit --no-fund"
+
+# -------------------------------------------------------------- Redirects
+# Apex → www is conventionally the wrong direction (we want www → apex),
+# so leave both working via CNAME. Below: legacy URL safety nets.
+[[redirects]]
+  from = "/posts/*"
+  to   = "/essays/:splat"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/post/*"
+  to   = "/essays/:splat"
+  status = 301
+  force = false
+
+# Old v4 anchor-on-index URLs that the legacy site published:
+# e.g. /index.html#post-7  -> /essays/seven-pointless-ot-pen-test-findings
+[[redirects]]
+  from = "/#post-*"
+  to   = "/essays/:splat"
+  status = 301
+  force = false
+
+# Default 404 — Netlify serves this when nothing matches.
+[[redirects]]
+  from = "/*"
+  to   = "/404.html"
+  status = 404
+  force = false
+
+# -------------------------------------------------------------- Security headers
+# Apply to every response. Browsers and crawlers honour these.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # Content Security: only allow styles from this site + Google Fonts; only
+    # scripts from this site (RSS feed only needs that). Tighten further if
+    # you add third-party scripts.
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'"
+
+# Long-cache assets that have content-hashed filenames (none yet, but cheap
+# insurance). Tags in place for when we move to a hashed-asset pipeline.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Don't aggressively cache HTML; we want re-deploys to be seen quickly.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
+# -------------------------------------------------------------- Build plugins
+# Skip Netlify's automatic HTML processing — we ship our own and don't need
+# asset fingerprinting at this scale.
+[[plugins]]
+  package = "@netlify/plugin-skip"
