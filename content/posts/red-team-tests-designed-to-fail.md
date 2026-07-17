@@ -4,9 +4,11 @@ slug: "red-team-tests-designed-to-fail"
 date: 2026-04-03
 tags:
   - "Purple Teaming"
+  - post
 author: Hugh McGauran
 excerpt: "Red team comes in on Monday. They've got a scope, a timeline, and a list of techniques to test. By Friday, they've \"successfully executed\" initial access, lateral movement, persistence, and exfiltration"
 layout: layouts/post.njk
+permalink: /essays/red-team-tests-designed-to-fail/
 ---
 Red team comes in on Monday. They've got a scope, a timeline, and a list of techniques to test. By Friday, they've "successfully executed" initial access, lateral movement, persistence, and exfiltration.
 

@@ -1,0 +1,29 @@
+{# JSON-LD Article schema for posts. Emits schema.org Article + Person. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ title | dump | safe }},
+  "description": {{ (excerpt or site.description) | dump | safe }},
+  "datePublished": {{ date | isoDate | dump | safe }},
+  "dateModified": {{ date | isoDate | dump | safe }},
+  "author": {
+    "@type": "Person",
+    "name": {{ (authorName if authorName else site.authorName) | dump | safe }},
+    "url": "{{ site.url }}/about/",
+    "sameAs": [
+      "https://twitter.com/purpleteamai",
+      "https://linkedin.com/in/hughmcgauran",
+      "https://github.com/hughmcgauran"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site.title | dump | safe }},
+    "url": "{{ site.url }}"
+  },
+  "mainEntityOfPage": "{{ site.url }}{{ page.url }}",
+  "image": "{{ site.url }}{{ ogImage or site.ogImage }}",
+  "keywords": {{ (tags | join(', ')) | dump | safe }}
+}
+</script>

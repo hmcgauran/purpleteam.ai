@@ -6,9 +6,11 @@ tags:
   - "Red Team"
   - "Purple Teaming"
   - "Threat Modelling"
+  - post
 author: Hugh McGauran
 excerpt: "Most red team engagements produce an impressive document and a set of \"critical findings\" that the security team could have predicted before the first phishing email was sent"
 layout: layouts/post.njk
+permalink: /essays/scoping-a-red-team-engagement/
 ---
 Most red team engagements produce an impressive document and a set of "critical findings" that the security team could have predicted before the first phishing email was sent.
 

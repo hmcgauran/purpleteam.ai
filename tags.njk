@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+title: Topics
+description: Browse essays by topic — purple teaming, detection engineering, red teaming, OT security, and more.
+permalink: /tags/
+---
+
+<section class="page">
+  <header class="page__header">
+    <p class="section-eyebrow">Topics</p>
+    <h1 class="page__title">Browse by topic</h1>
+  </header>
+
+  {% if collections.postsByTag %}
+    {% set tagsWithCounts = collections.postsByTag | tagCounts %}
+    {% if tagsWithCounts.length == 0 %}
+      <p class="page__lede">No tagged essays yet.</p>
+    {% else %}
+      <ul class="tag-grid">
+        {% for entry in tagsWithCounts %}
+          <li class="tag-grid__item">
+            <a href="/tags/{{ entry.slug }}/">
+              <span class="tag-grid__name">{{ entry.name }}</span>
+              <span class="tag-grid__count">{{ entry.count }} essay{% if entry.count != 1 %}s{% endif %}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% else %}
+    <p class="page__lede">No tagged essays yet.</p>
+  {% endif %}
+</section>

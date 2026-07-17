@@ -4,9 +4,11 @@ slug: "detection-engineering-real-environment"
 date: 2026-03-27
 tags:
   - "Purple Teaming"
+  - post
 author: Hugh McGauran
 excerpt: "I walked into a SOC last month where they'd deployed 847 Sigma rules"
 layout: layouts/post.njk
+permalink: /essays/detection-engineering-real-environment/
 ---
 I walked into a SOC last month where they'd deployed 847 Sigma rules.
 

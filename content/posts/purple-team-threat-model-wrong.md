@@ -4,9 +4,11 @@ slug: "purple-team-threat-model-wrong"
 date: 2026-03-20
 tags:
   - "Purple Teaming"
+  - post
 author: Hugh McGauran
 excerpt: "You ran a purple team exercise last week. Your red team executed a flawless attack chain: initial access via phishing, lateral movement via Kerberos relay, privilege escalation, and data exfiltration. Picture perfect"
 layout: layouts/post.njk
+permalink: /essays/purple-team-threat-model-wrong/
 ---
 You ran a purple team exercise last week. Your red team executed a flawless attack chain: initial access via phishing, lateral movement via Kerberos relay, privilege escalation, and data exfiltration. Picture perfect.
 

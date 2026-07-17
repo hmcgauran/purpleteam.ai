@@ -7,9 +7,11 @@ tags:
   - "Purple Teaming"
   - "ICS"
   - "Critical Infrastructure"
+  - post
 author: Hugh McGauran
 excerpt: "I keep hearing the same thing in conversations about operational technology security"
 layout: layouts/post.njk
+permalink: /essays/purple-teaming-ot/
 ---
 I keep hearing the same thing in conversations about operational technology security.
 

@@ -1,0 +1,16 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="/" aria-label="{{ site.title }} home">
+      <span class="site-header__brand-mark" aria-hidden="true"></span>
+      <span class="site-header__brand-name">{{ site.title }}</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>Essays</a></li>
+        <li><a href="/tags/" {% if page.url.startsWith('/tags') %}aria-current="page"{% endif %}>Topics</a></li>
+        <li><a href="/about/" {% if page.url.startsWith('/about') %}aria-current="page"{% endif %}>About</a></li>
+        <li><a href="/feed.xml">RSS</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

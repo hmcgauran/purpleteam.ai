@@ -6,9 +6,11 @@ tags:
   - "Insider Threat"
   - "Detection Engineering"
   - "Threat Modelling"
+  - post
 author: Hugh McGauran
 excerpt: "Your insider threat programme is aimed at the wrong target"
 layout: layouts/post.njk
+permalink: /essays/insider-threat-problem/
 ---
 Your insider threat programme is aimed at the wrong target.
 

@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: site.tags
+  size: 1
+  alias: tag
+permalink: /tags/{{ tag | slugify }}/
+eleventyComputed:
+  title: "{{ tag }}"
+  description: "Essays tagged {{ tag }} on {{ site.title }}."
+---
+
+<section class="page">
+  <header class="page__header">
+    <p class="section-eyebrow">Topic</p>
+    <h1 class="page__title">{{ tag }}</h1>
+    <p class="page__lede">Essays tagged <strong>{{ tag }}</strong>.</p>
+  </header>
+
+  {% set tagPosts = collections.postsByTag[tag] | reverse %}
+  <ol class="archive__list">
+    {% for post in tagPosts %}
+      <li class="archive__item">
+        <a class="archive__link" href="{{ post.url }}">
+          <h3 class="archive__title">{{ post.data.title }}</h3>
+          {% if post.data.excerpt %}
+            <p class="archive__excerpt">{{ post.data.excerpt }}</p>
+          {% endif %}
+          <p class="archive__meta">
+            <time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>
+          </p>
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+
+  <p class="page__back-link"><a href="/tags/">← All topics</a></p>
+</section>

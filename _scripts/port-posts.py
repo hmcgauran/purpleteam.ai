@@ -110,11 +110,13 @@ def convert(post: dict):
     ]
     for t in post["tags"]:
         fm.append(f"  - {yaml_escape(t)}")
+    fm.append('  - post')  # Implicit 'post' collection for cross-template queries.
     fm.extend(
         [
             "author: Hugh McGauran",
             f"excerpt: {yaml_escape(excerpt)}",
             "layout: layouts/post.njk",
+            f"permalink: /essays/{SLUGS[post['id']]}/",
             "---",
             "",
         ]

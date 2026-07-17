@@ -1,0 +1,67 @@
+---
+layout: layouts/base.njk
+title: false
+permalink: /
+---
+
+{% set allPosts = collections.post %}
+{% if allPosts.length > 0 %}
+  {% set featured = allPosts[allPosts.length - 1] %}
+  {% set archive = allPosts | dropLast | reverse %}
+{% else %}
+  {% set featured = false %}
+  {% set archive = [] %}
+{% endif %}
+
+<section class="masthead">
+  <div class="masthead__inner">
+    <p class="masthead__eyebrow">{{ site.title }}</p>
+    <h1 class="masthead__title">{{ site.tagline }}</h1>
+    <p class="masthead__lede">{{ site.description }}</p>
+    <p class="masthead__byline">By <strong>{{ site.authorName }}</strong> — {{ author.role }}. Writing weekly on the operational work that makes red and blue teams genuinely effective together.</p>
+  </div>
+</section>
+
+{% if featured %}
+<section class="featured" aria-labelledby="featured-heading">
+  <p class="section-eyebrow" id="featured-heading">Latest essay</p>
+  <article class="featured-card">
+    <p class="featured-card__meta">
+      <time datetime="{{ featured.date | isoDate }}">{{ featured.date | readableDate }}</time>
+      <span class="post__sep" aria-hidden="true">·</span>
+      {{ featured.templateContent | readingTime }}
+    </p>
+    <h2 class="featured-card__title">
+      <a href="{{ featured.url }}">{{ featured.data.title }}</a>
+    </h2>
+    {% if featured.data.excerpt %}
+      <p class="featured-card__excerpt">{{ featured.data.excerpt }}</p>
+    {% endif %}
+    <p><a class="featured-card__cta" href="{{ featured.url }}">Read essay →</a></p>
+  </article>
+</section>
+{% endif %}
+
+{% if archive.length > 0 %}
+<section class="archive" aria-labelledby="archive-heading">
+  <p class="section-eyebrow" id="archive-heading">Archive</p>
+  <ol class="archive__list">
+    {% for post in archive | reverse %}
+      <li class="archive__item">
+        <a class="archive__link" href="{{ post.url }}">
+          <h3 class="archive__title">{{ post.data.title }}</h3>
+          {% if post.data.excerpt %}
+            <p class="archive__excerpt">{{ post.data.excerpt }}</p>
+          {% endif %}
+          <p class="archive__meta">
+            <time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>
+            {% if post.data.tags %}<span class="archive__tags">
+              {% for tag in post.data.tags %}<span class="archive__tag">{{ tag }}</span>{% endfor %}
+            </span>{% endif %}
+          </p>
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}

@@ -4,9 +4,11 @@ slug: "purple-teaming-that-actually-works"
 date: 2026-04-10
 tags:
   - "Purple Teaming"
+  - post
 author: Hugh McGauran
 excerpt: "You've got a red team and a blue team. They hate each other"
 layout: layouts/post.njk
+permalink: /essays/purple-teaming-that-actually-works/
 ---
 You've got a red team and a blue team. They hate each other.
 

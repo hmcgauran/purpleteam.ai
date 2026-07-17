@@ -1,0 +1,42 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+metadata:
+  language: en-GB
+  title: "PurpleTeamAI"
+  subtitle: "The practitioner's guide to purple teaming"
+  url: "https://purpleteam.ai/"
+  feedUrl: "https://purpleteam.ai/feed.xml"
+  author:
+    name: "Hugh McGauran"
+    email: "hello@purpleteam.ai"
+---
+{% set posts = collections.post | reverse %}
+{% set newestISO = posts[0].date | isoDate if posts.length else '' %}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ metadata.language }}">
+  <title>{{ metadata.title }}</title>
+  <subtitle>{{ metadata.subtitle }}</subtitle>
+  <link href="{{ metadata.feedUrl }}" rel="self"/>
+  <link href="{{ metadata.url }}"/>
+  <updated>{{ newestISO }}</updated>
+  <id>{{ metadata.url }}</id>
+  <author>
+    <name>{{ metadata.author.name }}</name>
+    <email>{{ metadata.author.email }}</email>
+  </author>
+  {% for post in posts %}
+  {% set absolutePostUrl %}{{ post.url | absoluteUrl(metadata.url) }}{% endset %}
+  <entry>
+    <title>{{ post.data.title }}</title>
+    <link href="{{ absolutePostUrl }}"/>
+    <updated>{{ post.date | isoDate }}</updated>
+    <id>{{ absolutePostUrl }}</id>
+    {% for tag in post.data.tags %}
+    <category term="{{ tag }}" />
+    {% endfor %}
+    <summary>{{ post.data.excerpt or metadata.subtitle }}</summary>
+  </entry>
+  {% endfor %}
+</feed>
+

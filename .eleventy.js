@@ -9,18 +9,18 @@
 const fs = require('fs');
 const path = require('path');
 const { DateTime } = require('luxon');
-const sitemap = require('@quasibit/eleventy-plugin-sitemap');
 
 module.exports = function (eleventyConfig) {
-  // Passthrough static assets
-  eleventyConfig.addPassthroughCopy({ static: 'static' });
-  eleventyConfig.addPassthroughCopy({ 'content/assets': 'assets' });
+  // Passthrough static assets. assets/ at root is the canonical place.
+  eleventyConfig.addPassthroughCopy({ 'assets': 'assets' });
+  eleventyConfig.addPassthroughCopy({ 'robots.txt': 'robots.txt' });
 
   // Date filters — use ISO everywhere internally; render human-readable separately.
   eleventyConfig.addFilter('isoDate', (d) => {
     if (!d) return '';
-    return DateTime.fromISO(String(d), { zone: 'utc' })
-      .toISO({ suppressMilliseconds: true });
+    const dt = (d instanceof Date) ? d : new Date(d);
+    if (isNaN(dt.getTime())) return '';
+    return dt.toISOString().slice(0, 19) + 'Z';
   });
 
   eleventyConfig.addFilter('readableDate', (d) => {
@@ -37,6 +37,41 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter('limit', (arr, n) => (arr || []).slice(0, n));
+
+  // Newest ISO date from a list of dated objects.
+  eleventyConfig.addFilter('newestDateISO', (arr) => {
+    if (!arr || !arr.length) return '';
+    const newest = arr.reduce((a, b) => (a.date > b.date ? a : b));
+    return newest.date ? newest.date.toISOString().slice(0, 19) + 'Z' : '';
+  });
+
+  // Drop the last item from an array (used to remove the featured post from archive).
+  eleventyConfig.addFilter('dropLast', (arr) => (arr || []).slice(0, -1));
+
+  eleventyConfig.addFilter('slugify', (s) =>
+    String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  );
+
+  // Absolute URL: `${site.url}${path}`. Tolerates either side having the slash.
+  eleventyConfig.addFilter('absoluteUrl', (path, base) => {
+    base = base || 'https://purpleteam.ai';
+    if (!base.endsWith('/')) base = base + '/';
+    if (path.startsWith('/')) path = path.slice(1);
+    return base + path;
+  });
+
+  // Build a sorted list of {name, count, slug} from a tag → posts map.
+  eleventyConfig.addFilter('tagCounts', (postsByTag) => {
+    const out = [];
+    for (const [name, posts] of Object.entries(postsByTag || {})) {
+      out.push({
+        name,
+        count: posts.length,
+        slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+      });
+    }
+    return out.sort((a, b) => a.name.localeCompare(b.name));
+  });
 
   // Collections scoped to the publish gate.
   const schedulePath = path.join(__dirname, 'strategy', 'PUBLISH-SCHEDULE.json');
@@ -74,11 +109,46 @@ module.exports = function (eleventyConfig) {
     return tagged;
   });
 
-  // Sitemap
-  eleventyConfig.addPlugin(sitemap, {
-    sitemap: {
-      hostname: 'https://purpleteam.ai',
-    },
+  // Plain array of tag names so `pagination.data` can iterate cleanly.
+  eleventyConfig.addCollection('tagsList', (api) => {
+    const tagged = new Set();
+    api.getFilteredByGlob('content/posts/*.md')
+      .filter(isLive)
+      .forEach((p) => {
+        (p.data.tags || []).forEach((t) => tagged.add(t));
+      });
+    return Array.from(tagged).sort();
+  });
+
+  // Sitemap generated manually for full control of the output. We collect
+  // URLs at sitemap-generation time so we don't depend on plugin lifecycle hooks.
+  eleventyConfig.on('eleventy.after', async () => {
+    const fsx = require('fs');
+    const pathx = require('path');
+    const out = pathx.join(__dirname, '_site', 'sitemap.xml');
+    const base = 'https://purpleteam.ai';
+    function walk(dir, acc = []) {
+      const entries = fsx.readdirSync(dir, { withFileTypes: true });
+      for (const e of entries) {
+        const full = pathx.join(dir, e.name);
+        if (e.isDirectory()) walk(full, acc);
+        else if (e.name === 'index.html') {
+          const rel = pathx.relative(pathx.join(__dirname, '_site'), pathx.dirname(full));
+          const url = rel === '' ? `${base}/` : `${base}/${rel.replace(/\\/g, '/')}/`;
+          acc.push(url);
+        }
+      }
+      return acc;
+    }
+    const urls = walk(pathx.join(__dirname, '_site'));
+    const xml = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      ...urls.map((u) => `  <url><loc>${u}</loc></url>`),
+      '</urlset>',
+      '',
+    ].join('\n');
+    fsx.writeFileSync(out, xml);
   });
 
   return {

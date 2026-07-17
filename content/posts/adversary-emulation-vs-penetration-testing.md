@@ -5,9 +5,11 @@ date: 2026-07-02
 tags:
   - "Red Team"
   - "Purple Teaming"
+  - post
 author: Hugh McGauran
 excerpt: "You paid £80,000 for a \"red team engagement.\" The report arrived with 47 findings, a 12-page executive summary, and a heat map of your network that looked like something out of a disaster movie"
 layout: layouts/post.njk
+permalink: /essays/adversary-emulation-vs-penetration-testing/
 ---
 You paid £80,000 for a "red team engagement." The report arrived with 47 findings, a 12-page executive summary, and a heat map of your network that looked like something out of a disaster movie.
 

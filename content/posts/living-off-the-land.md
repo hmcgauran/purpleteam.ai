@@ -6,9 +6,11 @@ tags:
   - "Detection Engineering"
   - "Red Team"
   - "Blue Team"
+  - post
 author: Hugh McGauran
 excerpt: "Volt Typhoon maintained access to critical infrastructure networks in the United States for at least five years. Microsoft, Mandiant, and the Five Eyes governments published the technical details in 2024. The…"
 layout: layouts/post.njk
+permalink: /essays/living-off-the-land/
 ---
 Volt Typhoon maintained access to critical infrastructure networks in the United States for at least five years. Microsoft, Mandiant, and the Five Eyes governments published the technical details in 2024. The tradecraft was consistent across the campaign: almost no custom malware. The actors relied on built-in Windows tooling - PowerShell, WMI, scheduled tasks, RDP, and a handful of signed Microsoft binaries - to move laterally, persist, and exfiltrate. They were inside the network, doing real adversary work, and the security stack had no signature to alert on.
 

@@ -7,9 +7,11 @@ tags:
   - "Purple Teaming"
   - "ICS"
   - "Pen Testing"
+  - post
 author: Hugh McGauran
 excerpt: "If you run enough OT pen tests, you start to notice a pattern. The report arrives, the client is confused, and the findings have a peculiar quality: technically correct, operationally impossible to remediate, and…"
 layout: layouts/post.njk
+permalink: /essays/seven-pointless-ot-pen-test-findings/
 ---
 If you run enough OT pen tests, you start to notice a pattern. The report arrives, the client is confused, and the findings have a peculiar quality: technically correct, operationally impossible to remediate, and almost entirely beside the point.
 

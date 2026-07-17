@@ -6,9 +6,11 @@ tags:
   - "Purple Teaming"
   - "Red Team"
   - "Blue Team"
+  - post
 author: Hugh McGauran
 excerpt: "You ran a three-week purple team exercise. Your team worked hard. The red team executed a realistic adversary emulation. Your blue team detected some of it, missed most of it, and the gaps are clear. The debrief went…"
 layout: layouts/post.njk
+permalink: /essays/purple-team-report-that-gets-read/
 ---
 You ran a three-week purple team exercise. Your team worked hard. The red team executed a realistic adversary emulation. Your blue team detected some of it, missed most of it, and the gaps are clear. The debrief went well.
 
