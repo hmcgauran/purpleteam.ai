@@ -101,7 +101,7 @@ the topic-page index won't include it.
 
 ## Deployment
 
-Hosted on Netlify. Source on GitHub at `purpleteam.ai`. Netlify builds on every
+Hosted on Netlify. Source repo at `purpleteam.ai`. Netlify builds on every
 push to `main`:
 
 - Build command: `npm run build`

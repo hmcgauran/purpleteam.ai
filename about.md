@@ -31,6 +31,6 @@ permalink: /about/
     <h2>About the author</h2>
     <p>{{ author.longBio }}</p>
 
-    <p>You can reach Hugh at <a href="mailto:{{ author.email }}">{{ author.email }}</a>. He's on <a href="{{ author.twitter }}">Twitter</a>, <a href="{{ author.linkedin }}">LinkedIn</a>, and <a href="{{ author.github }}">GitHub</a>.</p>
+    <p>You can reach Hugh at <a href="mailto:{{ author.email }}">{{ author.email }}</a>. He's on <a href="{{ author.twitter }}">Twitter</a> and <a href="{{ author.linkedin }}">LinkedIn</a>.</p>
   </div>
 </section>
