@@ -7,11 +7,11 @@ tags:
   - "Purple Teaming"
   - post
 author: Hugh McGauran
-excerpt: "You paid £80,000 for a \"red team engagement.\" The report arrived with 47 findings, a 12-page executive summary, and a heat map of your network that looked like something out of a disaster movie"
+excerpt: "You paid €80,000 for a \"red team engagement.\" The report arrived with 47 findings, a 12-page executive summary, and a heat map of your network that looked like something out of a disaster movie"
 layout: layouts/post.njk
 permalink: /essays/adversary-emulation-vs-penetration-testing/
 ---
-You paid £80,000 for a "red team engagement." The report arrived with 47 findings, a 12-page executive summary, and a heat map of your network that looked like something out of a disaster movie.
+You paid €80,000 for a "red team engagement." The report arrived with 47 findings, a 12-page executive summary, and a heat map of your network that looked like something out of a disaster movie.
 
 Then you read it. Three quarters of the findings were misconfigured services and missing patches — work your vulnerability scanner should have flagged months ago. The "sophisticated attack chain" involved exploiting a 2021 CVE on an unpatched internet-facing host that any script kiddie with Shodan could have located in an afternoon. The "red team operators" used off-the-shelf exploitation tooling in default configuration and ran their attacks during business hours, when your SOC was at full staffing.
 
