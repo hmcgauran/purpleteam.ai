@@ -40,6 +40,28 @@ layout: layouts/base.njk
     {{ content | safe }}
   </div>
 
+  <aside class="author-bio" aria-label="About the author">
+    <div class="author-bio__avatar" aria-hidden="true">HM</div>
+    <div>
+      {% if author and author.name %}
+        {% set authorName = author.name %}
+      {% elif author %}
+        {% set authorName = author %}
+      {% else %}
+        {% set authorName = site.authorName %}
+      {% endif %}
+      <p class="author-bio__name">{{ authorName }}</p>
+      <p class="author-bio__role">{{ author.role if author and author.role else '' }}{{ ' · ' ~ author.location if author and author.location else '' }}</p>
+      <p class="author-bio__copy">{{ author.shortBio if author and author.shortBio else site.description }}</p>
+      <p>
+        <a href="{{ author.twitter }}">Twitter</a> ·
+        <a href="{{ author.linkedin }}">LinkedIn</a> ·
+        <a href="{{ author.github }}">GitHub</a> ·
+        <a href="mailto:{{ author.email }}">Email</a>
+      </p>
+    </div>
+  </aside>
+
   {% include 'partials/newsletter-cta.njk' %}
 
   <nav class="post__nav" aria-label="Continue reading">
