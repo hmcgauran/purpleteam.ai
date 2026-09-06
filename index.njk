@@ -7,7 +7,7 @@ permalink: /
 {# The convergence SVG draws itself in on load. We add the .convergence--armed
    class via inline JS below the figure. #}
 
-{% set allPosts = collections.post | sortDesc %}
+{% set allPosts = collections.posts | sortDesc %}
 {% set featured = false %}
 {% set archive = [] %}
 {% if allPosts.length > 0 %}

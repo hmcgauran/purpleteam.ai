@@ -154,11 +154,33 @@ module.exports = function (eleventyConfig) {
     return liveFiles.has(base);
   }
 
-  eleventyConfig.addCollection('posts', (api) => {
-    return api
-      .getFilteredByGlob('content/posts/*.md')
-      .filter(isLive)
-      .sort((a, b) => a.date - b.date);
+  // Bug fix: the `posts` collection was previously broken in Eleventy 3
+  // because `api.getFilteredByGlob` returns zero items when called from
+  // inside this collection callback (the same issue we hit with the
+  // postsByTag collection). The robust workaround is the same one we
+  // use for `postsByTag`: compute the data in a global data file
+  // (_data/postsByTag.js) and expose it as a collection via a thin
+  // wrapper. The wrapper still has to look like an Eleventy template
+  // object (so the {% for post in archive %} loop can read post.url,
+  // post.data.title, post.date, etc.), so we build the same shape from
+  // the data file.
+  //
+  // Templates read this collection as `collections.posts` (plural).
+  // The default Eleventy 3 `post` collection (singular) is also still
+  // available, but it includes future-dated posts. We use `posts` so
+  // the publish-gate is honoured.
+  eleventyConfig.addCollection('posts', () => {
+    const { postsByTag } = require('./_data/postsByTag.js');
+    const out = [];
+    for (const arr of Object.values(postsByTag || {})) {
+      for (const p of arr) out.push(p);
+    }
+    out.sort((a, b) => {
+      const ad = a.date ? new Date(a.date).getTime() : 0;
+      const bd = b.date ? new Date(b.date).getTime() : 0;
+      return ad - bd;
+    });
+    return out;
   });
 
   // Bug fix: the previous `postsByTag` collection was broken in Eleventy 3

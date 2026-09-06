@@ -1,7 +1,7 @@
 ---
 title: "The Detection Rule That Changed How I Think About Fidelity"
 slug: "the-detection-rule-that-changed-how-i-think-about-fidelity"
-date: 2026-09-24
+date: 2026-11-26
 tags:
   - "Detection Engineering"
   - post

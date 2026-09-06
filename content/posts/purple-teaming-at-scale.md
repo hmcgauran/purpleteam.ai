@@ -1,7 +1,7 @@
 ---
 title: "Purple Teaming at Scale: How It Changes When You Have 20 Blue Team Analysts"
 slug: "purple-teaming-at-scale"
-date: 2026-07-09
+date: 2026-09-10
 tags:
   - "Purple Teaming"
   - "Detection Engineering"

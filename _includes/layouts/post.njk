@@ -15,7 +15,7 @@ layout: layouts/base.njk
 {% endif %}
 
 {# Get prev / next essay #}
-{% set allPosts = collections.post %}
+{% set allPosts = collections.posts %}
 {% set postIndex = -1 %}
 {% for p in allPosts %}
   {% if p.fileSlug == page.fileSlug %}

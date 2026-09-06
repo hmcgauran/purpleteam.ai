@@ -1,7 +1,7 @@
 ---
 title: "Why Most Threat Intelligence Programmes Are Not Worth the Money"
 slug: "why-most-threat-intelligence-programmes-are-not-worth-the-money"
-date: 2026-08-13
+date: 2026-10-15
 tags:
   - "Threat Modelling"
   - "Purple Teaming"

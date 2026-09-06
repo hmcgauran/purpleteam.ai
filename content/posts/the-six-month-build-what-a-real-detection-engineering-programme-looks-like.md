@@ -1,7 +1,7 @@
 ---
 title: "The Six-Month Build: What a Real Detection Engineering Programme Looks Like"
 slug: "the-six-month-build-what-a-real-detection-engineering-programme-looks-like"
-date: 2026-08-20
+date: 2026-10-22
 tags:
   - "Detection Engineering"
   - "Blue Team"

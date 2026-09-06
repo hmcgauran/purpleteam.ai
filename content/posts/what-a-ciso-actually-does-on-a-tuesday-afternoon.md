@@ -1,7 +1,7 @@
 ---
 title: "What a CISO Actually Does on a Tuesday Afternoon"
 slug: "what-a-ciso-actually-does-on-a-tuesday-afternoon"
-date: 2026-09-17
+date: 2026-11-19
 tags:
   - "Purple Teaming"
   - "Threat Modelling"

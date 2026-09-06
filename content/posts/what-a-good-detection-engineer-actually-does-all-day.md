@@ -1,7 +1,7 @@
 ---
 title: "What a Good Detection Engineer Actually Does All Day"
 slug: "what-a-good-detection-engineer-actually-does-all-day"
-date: 2026-07-23
+date: 2026-09-24
 tags:
   - "Detection Engineering"
   - "Blue Team"
