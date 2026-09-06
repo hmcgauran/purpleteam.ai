@@ -41,9 +41,21 @@ expected_essays=(
   "essays/living-off-the-land/"
   "essays/purple-team-report-that-gets-read/"
   "essays/adversary-emulation-vs-penetration-testing/"
+  "essays/purple-teaming-at-scale/"
+  "essays/building-a-detection-baseline/"
+  "essays/what-a-good-detection-engineer-actually-does-all-day/"
+  "essays/what-i-look-for-in-a-red-team-report/"
+  "essays/the-red-team-engagement-that-changed-how-i-think-about-risk/"
+  "essays/why-most-threat-intelligence-programmes-are-not-worth-the-money/"
+  "essays/the-six-month-build-what-a-real-detection-engineering-programme-looks-like/"
+  "essays/tabletop-exercises-that-actually-prepare-you-for-an-incident/"
+  "essays/how-to-run-a-purple-team-exercise-when-nobody-has-done-one-before/"
+  "essays/how-to-hire-a-detection-engineer-when-you-have-never-hired-one-before/"
+  "essays/what-a-ciso-actually-does-on-a-tuesday-afternoon/"
+  "essays/the-detection-rule-that-changed-how-i-think-about-fidelity/"
 )
 
-echo "→ Checking 11 essay URLs"
+echo "→ Checking ${#expected_essays[@]} essay URLs"
 for url in "${expected_essays[@]}"; do
   if [ ! -f "_site/${url}index.html" ]; then
     echo "✘ Missing: /${url}"

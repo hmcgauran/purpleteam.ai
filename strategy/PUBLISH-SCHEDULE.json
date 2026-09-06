@@ -103,21 +103,109 @@
       "id": "post-12",
       "number": 12,
       "title": "Purple Teaming at Scale: How It Changes When You Have 20 Blue Team Analysts",
-      "file": "purpleteam-blog-post-12.md",
+      "file": "purple-teaming-at-scale.md",
       "publishDate": "2026-07-09",
-      "approved": false,
-      "tags": ["Purple Teaming", "Detection Engineering"],
-      "notes": "Source file not yet written. Held back from publish gate; restore to approved: true once the .md exists in content/posts/."
+      "approved": true,
+      "tags": ["Purple Teaming", "Detection Engineering"]
     },
     {
       "id": "post-13",
       "number": 13,
       "title": "Building a Detection Baseline: The Work Nobody Wants to Do",
-      "file": "purpleteam-blog-post-13.md",
+      "file": "building-a-detection-baseline.md",
       "publishDate": "2026-07-16",
-      "approved": false,
-      "tags": ["Detection Engineering", "Blue Team"],
-      "notes": "Source file not yet written. Held back from publish gate; restore to approved: true once the .md exists in content/posts/."
+      "approved": true,
+      "tags": ["Detection Engineering", "Blue Team"]
+    },
+    {
+      "id": "post-14",
+      "number": 14,
+      "title": "What a Good Detection Engineer Actually Does All Day",
+      "file": "what-a-good-detection-engineer-actually-does-all-day.md",
+      "publishDate": "2026-07-23",
+      "approved": true,
+      "tags": ["Detection Engineering", "Blue Team"]
+    },
+    {
+      "id": "post-15",
+      "number": 15,
+      "title": "What I Look For in a Red Team Report",
+      "file": "what-i-look-for-in-a-red-team-report.md",
+      "publishDate": "2026-07-30",
+      "approved": true,
+      "tags": ["Red Team", "Purple Teaming"]
+    },
+    {
+      "id": "post-16",
+      "number": 16,
+      "title": "The Red Team Engagement That Changed How I Think About Risk",
+      "file": "the-red-team-engagement-that-changed-how-i-think-about-risk.md",
+      "publishDate": "2026-08-06",
+      "approved": true,
+      "tags": ["Red Team", "Purple Teaming"]
+    },
+    {
+      "id": "post-17",
+      "number": 17,
+      "title": "Why Most Threat Intelligence Programmes Are Not Worth the Money",
+      "file": "why-most-threat-intelligence-programmes-are-not-worth-the-money.md",
+      "publishDate": "2026-08-13",
+      "approved": true,
+      "tags": ["Threat Modelling", "Purple Teaming"]
+    },
+    {
+      "id": "post-18",
+      "number": 18,
+      "title": "The Six-Month Build: What a Real Detection Engineering Programme Looks Like",
+      "file": "the-six-month-build-what-a-real-detection-engineering-programme-looks-like.md",
+      "publishDate": "2026-08-20",
+      "approved": true,
+      "tags": ["Detection Engineering", "Blue Team"]
+    },
+    {
+      "id": "post-19",
+      "number": 19,
+      "title": "Tabletop Exercises That Actually Prepare You for an Incident",
+      "file": "tabletop-exercises-that-actually-prepare-you-for-an-incident.md",
+      "publishDate": "2026-08-27",
+      "approved": true,
+      "tags": ["Purple Teaming", "Blue Team"]
+    },
+    {
+      "id": "post-20",
+      "number": 20,
+      "title": "How to Run a Purple Team Exercise When Nobody Has Done One Before",
+      "file": "how-to-run-a-purple-team-exercise-when-nobody-has-done-one-before.md",
+      "publishDate": "2026-09-03",
+      "approved": true,
+      "tags": ["Purple Teaming"]
+    },
+    {
+      "id": "post-21",
+      "number": 21,
+      "title": "How to Hire a Detection Engineer When You Have Never Hired One Before",
+      "file": "how-to-hire-a-detection-engineer-when-you-have-never-hired-one-before.md",
+      "publishDate": "2026-09-10",
+      "approved": true,
+      "tags": ["Detection Engineering", "Blue Team"]
+    },
+    {
+      "id": "post-22",
+      "number": 22,
+      "title": "What a CISO Actually Does on a Tuesday Afternoon",
+      "file": "what-a-ciso-actually-does-on-a-tuesday-afternoon.md",
+      "publishDate": "2026-09-17",
+      "approved": true,
+      "tags": ["Purple Teaming", "Threat Modelling"]
+    },
+    {
+      "id": "post-23",
+      "number": 23,
+      "title": "The Detection Rule That Changed How I Think About Fidelity",
+      "file": "the-detection-rule-that-changed-how-i-think-about-fidelity.md",
+      "publishDate": "2026-09-24",
+      "approved": true,
+      "tags": ["Detection Engineering"]
     }
   ]
 }
