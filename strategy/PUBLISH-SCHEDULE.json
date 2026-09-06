@@ -4,43 +4,43 @@
       "id": "post-1",
       "number": 1,
       "title": "Your Purple Team Test Failed Because Your Threat Model Is Wrong",
-      "file": "purpleteam-blog-post-1.md",
+      "file": "purple-team-threat-model-wrong.md",
       "publishDate": "2026-03-20",
       "approved": true,
-      "tags": ["Purple Teaming"]
+      "tags": ["Purple Teaming", "Threat Modelling"]
     },
     {
       "id": "post-2",
       "number": 2,
       "title": "Detection Engineering in a Real Environment: Why Generic Rules Fail",
-      "file": "purpleteam-blog-post-2.md",
+      "file": "detection-engineering-real-environment.md",
       "publishDate": "2026-03-27",
       "approved": true,
-      "tags": ["Purple Teaming"]
+      "tags": ["Detection Engineering", "Purple Teaming"]
     },
     {
       "id": "post-3",
       "number": 3,
       "title": "Why Your Red Team Tests Are Designed to Fail, And You Don't Know It",
-      "file": "purpleteam-blog-post-3.md",
+      "file": "red-team-tests-designed-to-fail.md",
       "publishDate": "2026-04-03",
       "approved": true,
-      "tags": ["Purple Teaming"]
+      "tags": ["Red Team", "Purple Teaming"]
     },
     {
       "id": "post-4",
       "number": 4,
       "title": "Purple Teaming That Actually Works: A Framework for Real Collaboration",
-      "file": "purpleteam-blog-post-4.md",
+      "file": "purple-teaming-that-actually-works.md",
       "publishDate": "2026-04-10",
       "approved": true,
-      "tags": ["Purple Teaming"]
+      "tags": ["Purple Teaming", "Red Team", "Blue Team"]
     },
     {
       "id": "post-5",
       "number": 5,
       "title": "How to Scope a Red Team Engagement That Tells You Something Real",
-      "file": "purpleteam-blog-post-5.md",
+      "file": "scoping-a-red-team-engagement.md",
       "publishDate": "2026-04-16",
       "approved": true,
       "tags": ["Red Team", "Purple Teaming", "Threat Modelling"]
@@ -49,7 +49,7 @@
       "id": "post-6",
       "number": 6,
       "title": "Purple Teaming OT: Why \"We Can't Test That\" Is No Longer Acceptable",
-      "file": "purpleteam-blog-post-6.md",
+      "file": "purple-teaming-ot.md",
       "publishDate": "2026-04-23",
       "approved": true,
       "tags": ["OT Security", "Purple Teaming", "ICS", "Critical Infrastructure"]
@@ -58,7 +58,7 @@
       "id": "post-7",
       "number": 7,
       "title": "The 7 Most Pointless Findings in OT Pen Tests",
-      "file": "purpleteam-blog-post-7.md",
+      "file": "seven-pointless-ot-pen-test-findings.md",
       "publishDate": "2026-04-30",
       "approved": true,
       "tags": ["OT Security", "Purple Teaming", "ICS", "Pen Testing"]
@@ -67,7 +67,7 @@
       "id": "post-8",
       "number": 8,
       "title": "The Insider Threat Problem Is Not What You Think",
-      "file": "purpleteam-blog-post-8.md",
+      "file": "insider-threat-problem.md",
       "publishDate": "2026-05-07",
       "approved": true,
       "tags": ["Insider Threat", "Detection Engineering", "Threat Modelling"]
@@ -76,7 +76,7 @@
       "id": "post-9",
       "number": 9,
       "title": "Living Off the Land: Why the Best Attackers Don't Look Like Attackers",
-      "file": "purpleteam-blog-post-9.md",
+      "file": "living-off-the-land.md",
       "publishDate": "2026-05-14",
       "approved": true,
       "tags": ["Detection Engineering", "Red Team", "Blue Team"]
@@ -85,7 +85,7 @@
       "id": "post-10",
       "number": 10,
       "title": "How to Write a Purple Team Report That Actually Gets Read",
-      "file": "purpleteam-blog-post-10.md",
+      "file": "purple-team-report-that-gets-read.md",
       "publishDate": "2026-06-25",
       "approved": true,
       "tags": ["Purple Teaming", "Red Team", "Blue Team"]
@@ -94,7 +94,7 @@
       "id": "post-11",
       "number": 11,
       "title": "Adversary Emulation vs Penetration Testing: Why the Distinction Matters",
-      "file": "purpleteam-blog-post-11.md",
+      "file": "adversary-emulation-vs-penetration-testing.md",
       "publishDate": "2026-07-02",
       "approved": true,
       "tags": ["Red Team", "Purple Teaming"]
@@ -105,8 +105,9 @@
       "title": "Purple Teaming at Scale: How It Changes When You Have 20 Blue Team Analysts",
       "file": "purpleteam-blog-post-12.md",
       "publishDate": "2026-07-09",
-      "approved": true,
-      "tags": ["Purple Teaming", "Detection Engineering"]
+      "approved": false,
+      "tags": ["Purple Teaming", "Detection Engineering"],
+      "notes": "Source file not yet written. Held back from publish gate; restore to approved: true once the .md exists in content/posts/."
     },
     {
       "id": "post-13",
@@ -114,8 +115,9 @@
       "title": "Building a Detection Baseline: The Work Nobody Wants to Do",
       "file": "purpleteam-blog-post-13.md",
       "publishDate": "2026-07-16",
-      "approved": true,
-      "tags": ["Detection Engineering", "Blue Team"]
+      "approved": false,
+      "tags": ["Detection Engineering", "Blue Team"],
+      "notes": "Source file not yet written. Held back from publish gate; restore to approved: true once the .md exists in content/posts/."
     }
   ]
 }
