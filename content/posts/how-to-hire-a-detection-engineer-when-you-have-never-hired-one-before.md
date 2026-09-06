@@ -1,7 +1,7 @@
 ---
 title: "How to Hire a Detection Engineer When You Have Never Hired One Before"
 slug: "how-to-hire-a-detection-engineer-when-you-have-never-hired-one-before"
-date: 2026-11-12
+date: 2026-08-07
 tags:
   - "Detection Engineering"
   - "Blue Team"

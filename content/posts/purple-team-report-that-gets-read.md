@@ -1,7 +1,7 @@
 ---
 title: "How to Write a Purple Team Report That Actually Gets Read"
 slug: "purple-team-report-that-gets-read"
-date: 2026-06-25
+date: 2026-05-22
 tags:
   - "Purple Teaming"
   - "Red Team"

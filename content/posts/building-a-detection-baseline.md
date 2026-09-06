@@ -1,7 +1,7 @@
 ---
 title: "Building a Detection Baseline: The Work Nobody Wants to Do"
 slug: "building-a-detection-baseline"
-date: 2026-09-17
+date: 2026-06-12
 tags:
   - "Detection Engineering"
   - "Blue Team"

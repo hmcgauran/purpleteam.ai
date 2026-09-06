@@ -1,7 +1,7 @@
 ---
 title: "How to Scope a Red Team Engagement That Tells You Something Real"
 slug: "scoping-a-red-team-engagement"
-date: 2026-04-16
+date: 2026-04-17
 tags:
   - "Red Team"
   - "Purple Teaming"

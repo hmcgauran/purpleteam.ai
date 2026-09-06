@@ -1,7 +1,7 @@
 ---
 title: "The Insider Threat Problem Is Not What You Think"
 slug: "insider-threat-problem"
-date: 2026-05-07
+date: 2026-05-08
 tags:
   - "Insider Threat"
   - "Detection Engineering"

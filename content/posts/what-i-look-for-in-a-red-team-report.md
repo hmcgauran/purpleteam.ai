@@ -1,7 +1,7 @@
 ---
 title: "What I Look For in a Red Team Report"
 slug: "what-i-look-for-in-a-red-team-report"
-date: 2026-10-01
+date: 2026-06-26
 tags:
   - "Red Team"
   - "Purple Teaming"

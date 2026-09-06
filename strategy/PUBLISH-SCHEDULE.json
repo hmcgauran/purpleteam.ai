@@ -54,7 +54,7 @@
       "number": 5,
       "title": "How to Scope a Red Team Engagement That Tells You Something Real",
       "file": "scoping-a-red-team-engagement.md",
-      "publishDate": "2026-04-16",
+      "publishDate": "2026-04-17",
       "approved": true,
       "tags": [
         "Red Team",
@@ -67,7 +67,7 @@
       "number": 6,
       "title": "Purple Teaming OT: Why \"We Can't Test That\" Is No Longer Acceptable",
       "file": "purple-teaming-ot.md",
-      "publishDate": "2026-04-23",
+      "publishDate": "2026-04-24",
       "approved": true,
       "tags": [
         "OT Security",
@@ -81,7 +81,7 @@
       "number": 7,
       "title": "The 7 Most Pointless Findings in OT Pen Tests",
       "file": "seven-pointless-ot-pen-test-findings.md",
-      "publishDate": "2026-04-30",
+      "publishDate": "2026-05-01",
       "approved": true,
       "tags": [
         "OT Security",
@@ -95,7 +95,7 @@
       "number": 8,
       "title": "The Insider Threat Problem Is Not What You Think",
       "file": "insider-threat-problem.md",
-      "publishDate": "2026-05-07",
+      "publishDate": "2026-05-08",
       "approved": true,
       "tags": [
         "Insider Threat",
@@ -108,7 +108,7 @@
       "number": 9,
       "title": "Living Off the Land: Why the Best Attackers Don't Look Like Attackers",
       "file": "living-off-the-land.md",
-      "publishDate": "2026-05-14",
+      "publishDate": "2026-05-15",
       "approved": true,
       "tags": [
         "Detection Engineering",
@@ -121,7 +121,7 @@
       "number": 10,
       "title": "How to Write a Purple Team Report That Actually Gets Read",
       "file": "purple-team-report-that-gets-read.md",
-      "publishDate": "2026-06-25",
+      "publishDate": "2026-05-22",
       "approved": true,
       "tags": [
         "Purple Teaming",
@@ -134,7 +134,7 @@
       "number": 11,
       "title": "Adversary Emulation vs Penetration Testing: Why the Distinction Matters",
       "file": "adversary-emulation-vs-penetration-testing.md",
-      "publishDate": "2026-07-02",
+      "publishDate": "2026-05-29",
       "approved": true,
       "tags": [
         "Red Team",
@@ -146,8 +146,8 @@
       "number": 12,
       "title": "Purple Teaming at Scale: How It Changes When You Have 20 Blue Team Analysts",
       "file": "purple-teaming-at-scale.md",
-      "publishDate": "2026-09-10",
-      "approved": false,
+      "publishDate": "2026-06-05",
+      "approved": true,
       "tags": [
         "Purple Teaming",
         "Detection Engineering"
@@ -158,8 +158,8 @@
       "number": 13,
       "title": "Building a Detection Baseline: The Work Nobody Wants to Do",
       "file": "building-a-detection-baseline.md",
-      "publishDate": "2026-09-17",
-      "approved": false,
+      "publishDate": "2026-06-12",
+      "approved": true,
       "tags": [
         "Detection Engineering",
         "Blue Team"
@@ -170,8 +170,8 @@
       "number": 14,
       "title": "What a Good Detection Engineer Actually Does All Day",
       "file": "what-a-good-detection-engineer-actually-does-all-day.md",
-      "publishDate": "2026-09-24",
-      "approved": false,
+      "publishDate": "2026-06-19",
+      "approved": true,
       "tags": [
         "Detection Engineering",
         "Blue Team"
@@ -182,8 +182,8 @@
       "number": 15,
       "title": "What I Look For in a Red Team Report",
       "file": "what-i-look-for-in-a-red-team-report.md",
-      "publishDate": "2026-10-01",
-      "approved": false,
+      "publishDate": "2026-06-26",
+      "approved": true,
       "tags": [
         "Red Team",
         "Purple Teaming"
@@ -194,8 +194,8 @@
       "number": 16,
       "title": "The Red Team Engagement That Changed How I Think About Risk",
       "file": "the-red-team-engagement-that-changed-how-i-think-about-risk.md",
-      "publishDate": "2026-10-08",
-      "approved": false,
+      "publishDate": "2026-07-03",
+      "approved": true,
       "tags": [
         "Red Team",
         "Purple Teaming"
@@ -206,8 +206,8 @@
       "number": 17,
       "title": "Why Most Threat Intelligence Programmes Are Not Worth the Money",
       "file": "why-most-threat-intelligence-programmes-are-not-worth-the-money.md",
-      "publishDate": "2026-10-15",
-      "approved": false,
+      "publishDate": "2026-07-10",
+      "approved": true,
       "tags": [
         "Threat Modelling",
         "Purple Teaming"
@@ -218,8 +218,8 @@
       "number": 18,
       "title": "The Six-Month Build: What a Real Detection Engineering Programme Looks Like",
       "file": "the-six-month-build-what-a-real-detection-engineering-programme-looks-like.md",
-      "publishDate": "2026-10-22",
-      "approved": false,
+      "publishDate": "2026-07-17",
+      "approved": true,
       "tags": [
         "Detection Engineering",
         "Blue Team"
@@ -230,8 +230,8 @@
       "number": 19,
       "title": "Tabletop Exercises That Actually Prepare You for an Incident",
       "file": "tabletop-exercises-that-actually-prepare-you-for-an-incident.md",
-      "publishDate": "2026-10-29",
-      "approved": false,
+      "publishDate": "2026-07-24",
+      "approved": true,
       "tags": [
         "Purple Teaming",
         "Blue Team"
@@ -242,8 +242,8 @@
       "number": 20,
       "title": "How to Run a Purple Team Exercise When Nobody Has Done One Before",
       "file": "how-to-run-a-purple-team-exercise-when-nobody-has-done-one-before.md",
-      "publishDate": "2026-11-05",
-      "approved": false,
+      "publishDate": "2026-07-31",
+      "approved": true,
       "tags": [
         "Purple Teaming"
       ]
@@ -253,8 +253,8 @@
       "number": 21,
       "title": "How to Hire a Detection Engineer When You Have Never Hired One Before",
       "file": "how-to-hire-a-detection-engineer-when-you-have-never-hired-one-before.md",
-      "publishDate": "2026-11-12",
-      "approved": false,
+      "publishDate": "2026-08-07",
+      "approved": true,
       "tags": [
         "Detection Engineering",
         "Blue Team"
@@ -265,8 +265,8 @@
       "number": 22,
       "title": "What a CISO Actually Does on a Tuesday Afternoon",
       "file": "what-a-ciso-actually-does-on-a-tuesday-afternoon.md",
-      "publishDate": "2026-11-19",
-      "approved": false,
+      "publishDate": "2026-08-14",
+      "approved": true,
       "tags": [
         "Purple Teaming",
         "Threat Modelling"
@@ -277,8 +277,8 @@
       "number": 23,
       "title": "The Detection Rule That Changed How I Think About Fidelity",
       "file": "the-detection-rule-that-changed-how-i-think-about-fidelity.md",
-      "publishDate": "2026-11-26",
-      "approved": false,
+      "publishDate": "2026-08-21",
+      "approved": true,
       "tags": [
         "Detection Engineering"
       ]

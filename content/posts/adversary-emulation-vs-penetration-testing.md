@@ -1,7 +1,7 @@
 ---
 title: "Adversary Emulation vs Penetration Testing: Why the Distinction Matters"
 slug: "adversary-emulation-vs-penetration-testing"
-date: 2026-07-02
+date: 2026-05-29
 tags:
   - "Red Team"
   - "Purple Teaming"

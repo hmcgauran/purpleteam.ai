@@ -1,7 +1,7 @@
 ---
 title: "Tabletop Exercises That Actually Prepare You for an Incident"
 slug: "tabletop-exercises-that-actually-prepare-you-for-an-incident"
-date: 2026-10-29
+date: 2026-07-24
 tags:
   - "Purple Teaming"
   - "Blue Team"
