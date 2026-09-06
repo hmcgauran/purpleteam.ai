@@ -5,28 +5,27 @@ description: Browse essays by topic — purple teaming, detection engineering, r
 permalink: /tags/
 ---
 
-<section class="page">
+<section class="page shell">
   <header class="page__header">
-    <p class="section-eyebrow">Topics</p>
+    <p class="page__eyebrow">Topics</p>
     <h1 class="page__title">Browse by topic</h1>
+    <p class="page__lede">Eleven essays, ten topics. Offence reads red, defence reads blue, purple team work reads purple.</p>
   </header>
 
-  {% if collections.postsByTag %}
-    {% set tagsWithCounts = collections.postsByTag | tagCounts %}
-    {% if tagsWithCounts.length == 0 %}
-      <p class="page__lede">No tagged essays yet.</p>
-    {% else %}
-      <ul class="tag-grid">
-        {% for entry in tagsWithCounts %}
-          <li class="tag-grid__item">
-            <a href="/tags/{{ entry.slug }}/">
-              <span class="tag-grid__name">{{ entry.name }}</span>
-              <span class="tag-grid__count">{{ entry.count }} essay{% if entry.count != 1 %}s{% endif %}</span>
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+  {# Bug 2 fix: read from the global data file that mirrors the same
+     live-gate the Eleventy build applies to `collections.post`. #}
+  {% set tagList = tagList %}
+  {% if tagList and tagList.length %}
+    <ul class="tag-grid" role="list">
+      {% for entry in tagList %}
+        <li class="tag-grid__item">
+          <a href="/tags/{{ entry.slug }}/">
+            <span class="tag-grid__name">{{ entry.name }}</span>
+            <span class="tag-grid__count">{{ entry.count }} essay{% if entry.count != 1 %}s{% endif %}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
   {% else %}
     <p class="page__lede">No tagged essays yet.</p>
   {% endif %}

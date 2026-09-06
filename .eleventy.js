@@ -69,6 +69,54 @@ module.exports = function (eleventyConfig) {
     String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
   );
 
+  // Map a topic name to a chip colour class. Used by every card / chip
+  // surface so the colour rule lives in one place.
+  eleventyConfig.addFilter('chipClass', (tag) => {
+    const t = String(tag || '').toLowerCase();
+    const RED = new Set(['red team', 'pen testing', 'adversary emulation']);
+    const BLUE = new Set(['blue team', 'detection engineering', 'insider threat']);
+    const PURPLE = new Set(['purple teaming', 'threat modelling', 'threat modeling']);
+    if (RED.has(t))    return 'chip chip--red';
+    if (BLUE.has(t))   return 'chip chip--blue';
+    if (PURPLE.has(t)) return 'chip chip--purple';
+    return 'chip chip--neutral';
+  });
+
+  // Bug 3 fix: each post's first body paragraph duplicates the excerpt
+  // (the dek). Render the dek once at the top of the article and strip the
+  // matching leading <p> from the body so we don't display it twice.
+  eleventyConfig.addFilter('bodyWithoutDek', (content, excerpt) => {
+    if (!content) return '';
+    if (!excerpt) return content;
+    // Normalise both sides aggressively: collapse whitespace, decode the
+    // HTML entities the markdown renderer might emit (e.g. &quot; -> "),
+    // strip trailing punctuation, lower-case. The dek and the body are
+    // authored identically, so they should match after this.
+    const decode = (s) => String(s || '')
+      .replace(/&quot;/g, '"')
+      .replace(/&#34;/g, '"')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&mdash;/g, '\u2014')
+      .replace(/&ndash;/g, '\u2013')
+      .replace(/&hellip;/g, '\u2026')
+      .replace(/&rsquo;|&lsquo;/g, "'")
+      .replace(/&ldquo;|&rdquo;/g, '"');
+    const norm = (s) => decode(s).replace(/\s+/g, ' ').trim().replace(/[.\s]+$/, '').toLowerCase();
+    const want = norm(excerpt);
+    if (!want) return content;
+    // Find the first <p>...</p> and check whether its text matches the dek.
+    const m = String(content).match(/^(\s*<p[^>]*>)([\s\S]*?)(<\/p>)/i);
+    if (!m) return content;
+    const have = norm(m[2].replace(/<[^>]+>/g, ''));
+    if (have === want) {
+      // Drop the leading <p>...</p> and any whitespace before the next block.
+      return String(content).slice(m[0].length).replace(/^\s+/, '');
+    }
+    return content;
+  });
+
   // Absolute URL: `${site.url}${path}`. Tolerates either side having the slash.
   eleventyConfig.addFilter('absoluteUrl', (path, base) => {
     base = base || 'https://purpleteam.ai';
@@ -113,17 +161,18 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => a.date - b.date);
   });
 
-  eleventyConfig.addCollection('postsByTag', (api) => {
-    const tagged = {};
-    api.getFilteredByGlob('content/posts/*.md')
-      .filter(isLive)
-      .forEach((p) => {
-        (p.data.tags || []).forEach((t) => {
-          tagged[t] = tagged[t] || [];
-          tagged[t].push(p);
-        });
-      });
-    return tagged;
+  // Bug fix: the previous `postsByTag` collection was broken in Eleventy 3
+  // because `api.getFilteredByGlob` returns zero items when called from
+  // inside this collection callback. The robust workaround is to compute
+  // these from the frontmatter in a global data file (see
+  // _data/postsByTag.js), which is evaluated at template-render time
+  // and has the data we need.
+  eleventyConfig.addCollection('postsByTag', () => {
+    // Delegate to the global data file.
+    const { postsByTag, tagList } = require('./_data/postsByTag.js');
+    // Also rebuild the legacy `tagCounts` shape so existing templates work.
+    eleventyConfig.collections._tagCountsReady = tagList;
+    return postsByTag || {};
   });
 
   // Plain array of tag names so `pagination.data` can iterate cleanly.

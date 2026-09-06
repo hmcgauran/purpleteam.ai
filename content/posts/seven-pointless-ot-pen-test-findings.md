@@ -101,4 +101,4 @@ Write the report your OT client can actually use.
 
 ---
 
-*Hugh McGauran has 25 years of experience in cybersecurity and is Country Manager for Ireland at Armis. PurpleTeamAI explores practical purple team methodology for practitioners who need results, not frameworks.*
+PurpleTeamAI is a practitioner-led publication on purple team methodology, detection engineering, and operational security work. It exists because most public security content is either vendor marketing, generic framework worship, or theatre dressed as strategy — and the practitioners running real programmes deserve sharper thinking than that.

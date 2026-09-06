@@ -94,4 +94,4 @@ The first exercise will produce more findings than you can action in a quarter. 
 
 ---
 
-*Hugh McGauran is Country Manager for Ireland at Armis and has 25 years of experience in cybersecurity. PurpleTeamAI explores practical purple team methodology for practitioners who need results, not frameworks.*
+PurpleTeamAI is a practitioner-led publication on purple team methodology, detection engineering, and operational security work. It exists because most public security content is either vendor marketing, generic framework worship, or theatre dressed as strategy — and the practitioners running real programmes deserve sharper thinking than that.

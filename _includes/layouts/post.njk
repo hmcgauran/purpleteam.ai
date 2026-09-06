@@ -2,7 +2,19 @@
 layout: layouts/base.njk
 ---
 
-{% set post = page %}
+{# Derive a display name from the author frontmatter. The frontmatter can
+   be either a plain string ("Hugh McGauran") or an object ({name: "..."}).
+   Bug 1: previously this template rendered `author or site.authorName`
+   which became "[object Object]" when author was an object. #}
+{% if author and author.name %}
+  {% set authorName = author.name %}
+{% elif author %}
+  {% set authorName = author %}
+{% else %}
+  {% set authorName = site.authorName %}
+{% endif %}
+
+{# Get prev / next essay #}
 {% set allPosts = collections.post %}
 {% set postIndex = -1 %}
 {% for p in allPosts %}
@@ -19,49 +31,43 @@ layout: layouts/base.njk
   {% set nextPost = allPosts[postIndex + 1] %}
 {% endif %}
 
-<article class="post">
+<article class="post shell">
   <header class="post__header">
     <p class="post__eyebrow">
       <time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
-      <span class="post__sep" aria-hidden="true">·</span>
-      {{ content | readingTime }}
+      <span class="dot" aria-hidden="true"></span>
+      <span>{{ content | readingTime }}</span>
     </p>
     <h1 class="post__title">{{ title }}</h1>
-    {% if excerpt %}<p class="post__excerpt">{{ excerpt }}</p>{% endif %}
-    <p class="post__byline">By <a href="/about/">{{ author or site.authorName }}</a></p>
+    {% if excerpt %}<p class="post__dek">{{ excerpt }}</p>{% endif %}
+    <p class="post__byline">By <a href="/about/">{{ authorName }}</a></p>
     {% if tags %}
-    <ul class="post__tags" aria-label="Topics">
-      {% for tag in tags %}{% if tag != 'post' %}<li><a href="/tags/{{ tag | slugify }}/">{{ tag }}</a></li>{% endif %}{% endfor %}
-    </ul>
+      <p class="post__chips" aria-label="Topics">
+        {% for tag in tags %}{% if tag != 'post' %}
+          <a class="{{ tag | chipClass }}" href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
+        {% endif %}{% endfor %}
+      </p>
     {% endif %}
   </header>
 
+  {# Bug 3 fix: render the dek once (above), then strip the matching first
+     paragraph from the body so it doesn't show up twice. #}
   <div class="post__body prose">
-    {{ content | safe }}
+    {{ content | bodyWithoutDek(excerpt) | safe }}
   </div>
 
   <aside class="author-bio" aria-label="About the author">
-    <div class="author-bio__avatar" aria-hidden="true">HM</div>
+    <div class="author-bio__avatar" aria-hidden="true">{{ (authorName | first) | upper }}</div>
     <div>
-      {% if author and author.name %}
-        {% set authorName = author.name %}
-      {% elif author %}
-        {% set authorName = author %}
-      {% else %}
-        {% set authorName = site.authorName %}
-      {% endif %}
       <p class="author-bio__name">{{ authorName }}</p>
-      <p class="author-bio__role">{{ author.role if author and author.role else '' }}{{ ' · ' ~ author.location if author and author.location else '' }}</p>
-      <p class="author-bio__copy">{{ author.shortBio if author and author.shortBio else site.description }}</p>
+      <p class="author-bio__copy">{{ authorProfile.shortBio if authorProfile and authorProfile.shortBio else site.description }}</p>
       <p>
-        <a href="{{ author.twitter }}">Twitter</a> ·
-        <a href="{{ author.linkedin }}">LinkedIn</a> ·
-        <a href="mailto:{{ author.email }}">Email</a>
+        <a href="{{ authorProfile.twitter }}">Twitter</a>
+        <a href="{{ authorProfile.linkedin }}">LinkedIn</a>
+        <a href="mailto:{{ authorProfile.email }}">Email</a>
       </p>
     </div>
   </aside>
-
-  {% include 'partials/newsletter-cta.njk' %}
 
   <nav class="post__nav" aria-label="Continue reading">
     {% if prevPost %}
@@ -69,9 +75,7 @@ layout: layouts/base.njk
         <span class="post__nav-label">Previous essay</span>
         <span class="post__nav-title">{{ prevPost.data.title }}</span>
       </a>
-    {% else %}
-      <span></span>
-    {% endif %}
+    {% else %}<span></span>{% endif %}
     {% if nextPost %}
       <a class="post__nav-link post__nav-link--next" href="{{ nextPost.url }}">
         <span class="post__nav-label">Next essay</span>

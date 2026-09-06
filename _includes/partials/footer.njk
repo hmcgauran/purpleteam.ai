@@ -1,12 +1,15 @@
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <p class="site-footer__tagline">{{ site.title }} — {{ site.tagline }}. No vendors. No BS. {{ site.buildYear }}.</p>
-    <ul class="site-footer__links">
+    <div class="site-footer__brand">
+      <span class="site-footer__wordmark">PurpleTeamAI</span>
+      <p class="site-footer__tagline">The practitioner's guide to purple teaming. <em>No vendors. No BS.</em></p>
+    </div>
+    <ul class="site-footer__links" aria-label="Site links">
       <li><a href="/about/">About</a></li>
       <li><a href="/feed.xml">RSS</a></li>
-      <li><a href="https://twitter.com/purpleteamai">Twitter</a></li>
-      <li><a href="https://linkedin.com/in/hughmcgauran">LinkedIn</a></li>
-      <li><a href="mailto:{{ author.email }}">Contact</a></li>
+      <li><a href="{{ authorProfile.twitter }}" rel="me">Twitter</a></li>
+      <li><a href="{{ authorProfile.linkedin }}" rel="me">LinkedIn</a></li>
+      <li><a href="mailto:{{ authorProfile.email }}">Contact</a></li>
     </ul>
   </div>
 </footer>

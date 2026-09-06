@@ -1,3 +1,6 @@
+---
+permalink: false
+---
 # purpleteam.ai
 
 The static site that powers [purpleteam.ai](https://purpleteam.ai). Practitioner-led
