@@ -282,6 +282,58 @@
       "tags": [
         "Detection Engineering"
       ]
+    },
+    {
+      "id": "post-24",
+      "number": 24,
+      "title": "How to Build an Insider-Risk Programme That Actually Catches the Bad Cases",
+      "file": "how-to-build-an-insider-risk-programme-that-actually-catches-the-bad-cases.md",
+      "publishDate": "2026-08-27",
+      "approved": true,
+      "tags": [
+        "Insider Threat",
+        "Detection Engineering",
+        "Blue Team"
+      ]
+    },
+    {
+      "id": "post-25",
+      "number": 25,
+      "title": "How to Threat-Model a System You Have Never Seen Before",
+      "file": "how-to-threat-model-a-system-you-have-never-seen-before.md",
+      "publishDate": "2026-09-03",
+      "approved": true,
+      "tags": [
+        "Threat Modelling",
+        "Purple Teaming"
+      ]
+    },
+    {
+      "id": "post-26",
+      "number": 26,
+      "title": "What a Good ICS Detection Looks Like in Practice",
+      "file": "what-a-good-ics-detection-looks-like-in-practice.md",
+      "publishDate": "2026-09-06",
+      "approved": true,
+      "tags": [
+        "ICS",
+        "OT Security",
+        "Detection Engineering"
+      ]
+    },
+    {
+      "id": "post-27",
+      "number": 27,
+      "title": "ICS Tabletop Exercises: Why the Lessons Never Transfer to the Plant Floor",
+      "file": "ics-tabletop-exercises-lessons-dont-transfer.md",
+      "publishDate": "2026-09-17",
+      "approved": true,
+      "tags": [
+        "ICS",
+        "OT Security",
+        "Purple Teaming",
+        "Tabletop"
+      ]
     }
   ]
 }

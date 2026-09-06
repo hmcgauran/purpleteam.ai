@@ -53,6 +53,9 @@ expected_essays=(
   "essays/how-to-hire-a-detection-engineer-when-you-have-never-hired-one-before/"
   "essays/what-a-ciso-actually-does-on-a-tuesday-afternoon/"
   "essays/the-detection-rule-that-changed-how-i-think-about-fidelity/"
+  "essays/how-to-build-an-insider-risk-programme-that-actually-catches-the-bad-cases/"
+  "essays/how-to-threat-model-a-system-you-have-never-seen-before/"
+  "essays/what-a-good-ics-detection-looks-like-in-practice/"
 )
 
 echo "→ Checking ${#expected_essays[@]} essay URLs"
