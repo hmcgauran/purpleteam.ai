@@ -5,28 +5,23 @@ description: Browse essays by topic — purple teaming, detection engineering, r
 permalink: /tags/
 ---
 
-<section class="page shell">
-  <header class="page__header">
-    <p class="page__eyebrow">Topics</p>
-    <h1 class="page__title">Browse by topic</h1>
-    <p class="page__lede">Eleven essays, ten topics. Offence reads red, defence reads blue, purple team work reads purple.</p>
-  </header>
-
-  {# Bug 2 fix: read from the global data file that mirrors the same
-     live-gate the Eleventy build applies to `collections.post`. #}
-  {% set tagList = tagList %}
-  {% if tagList and tagList.length %}
-    <ul class="tag-grid" role="list">
-      {% for entry in tagList %}
-        <li class="tag-grid__item">
-          <a href="/tags/{{ entry.slug }}/">
-            <span class="tag-grid__name">{{ entry.name }}</span>
-            <span class="tag-grid__count">{{ entry.count }} essay{% if entry.count != 1 %}s{% endif %}</span>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p class="page__lede">No tagged essays yet.</p>
-  {% endif %}
-</section>
+{# Bug 2 fix: read the tag list from the global data file. Eleventy 3
+   exposes _data/<name>.js exports as the top-level key `<name>`, so
+   the data lives at `postsByTag.tagList` and `postsByTag.postsByTag`
+   (we could also rename the data file to _data/siteTags.js to make
+   the key `siteTags`, but the existing name is fine). #}
+{% set tagList = postsByTag.tagList or [] %}
+{% if tagList and tagList.length %}
+  <ul class="tag-grid" role="list">
+    {% for entry in tagList %}
+      <li class="tag-grid__item">
+        <a href="/tags/{{ entry.slug }}/">
+          <span class="tag-grid__name">{{ entry.name }}</span>
+          <span class="tag-grid__count">{{ entry.count }} essay{% if entry.count != 1 %}s{% endif %}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="page__lede">No tagged essays yet.</p>
+{% endif %}

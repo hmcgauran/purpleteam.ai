@@ -10,38 +10,30 @@ eleventyComputed:
   description: "Essays tagged {{ tag }} on {{ site.title }}."
 ---
 
-<section class="page shell">
-  <header class="page__header">
-    <p class="page__eyebrow">Topic</p>
-    <h1 class="page__title">{{ tag }}</h1>
-    <p class="page__lede">Essays tagged <strong>{{ tag }}</strong>.</p>
-  </header>
+{# Bug 2 fix: per-tag pages read from `postsByTag` (the global data file
+   exposed as the top-level key `postsByTag`). The paginated template
+   cannot reach an arbitrary page-level variable, so we rely on the
+   global data here. #}
+{% set tagPosts = (postsByTag.postsByTag[tag]) or [] %}
+{% if tagPosts and tagPosts.length %}
+  <ol class="archive__grid" role="list">
+    {% for post in tagPosts | sortDesc %}
+      <li class="card">
+        <a class="card__link" href="{{ post.url }}">
+          <p class="card__date"><time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time></p>
+          <h3 class="card__title">{{ post.data.title }}</h3>
+          {% if post.data.excerpt %}<p class="card__excerpt">{{ post.data.excerpt }}</p>{% endif %}
+        </a>
+        {% if post.data.tags %}
+          <p class="card__chips">
+            {% for t in post.data.tags %}{% if t != 'post' and t != tag %}
+              <a class="{{ t | chipClass }}" href="/tags/{{ t | slugify }}/">{{ t }}</a>
+            {% endif %}{% endfor %}
+          </p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+{% endif %}
 
-  {# Bug 2 fix: the per-tag pages used to read from `collections.postsByTag`
-     (a collection that returned 0 entries in Eleventy 3). The global data
-     file `_data/postsByTag.js` builds the same map from the filesystem
-     and is exposed as a top-level page key `postsByTag`. #}
-  {% set tagPosts = (postsByTag and postsByTag[tag]) or [] %}
-  {% if tagPosts and tagPosts.length %}
-    <ol class="archive__grid" role="list">
-      {% for post in tagPosts | sortDesc %}
-        <li class="card">
-          <a class="card__link" href="{{ post.url }}">
-            <p class="card__date"><time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time></p>
-            <h3 class="card__title">{{ post.data.title }}</h3>
-            {% if post.data.excerpt %}<p class="card__excerpt">{{ post.data.excerpt }}</p>{% endif %}
-          </a>
-          {% if post.data.tags %}
-            <p class="card__chips">
-              {% for t in post.data.tags %}{% if t != 'post' and t != tag %}
-                <a class="{{ t | chipClass }}" href="/tags/{{ t | slugify }}/">{{ t }}</a>
-              {% endif %}{% endfor %}
-            </p>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ol>
-  {% endif %}
-
-  <p class="page__back-link"><a href="/tags/">← All topics</a></p>
-</section>
+<p class="page__back-link"><a href="/tags/">← All topics</a></p>

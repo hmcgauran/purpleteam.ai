@@ -171,9 +171,20 @@ module.exports = function (eleventyConfig) {
   // the publish-gate is honoured.
   eleventyConfig.addCollection('posts', () => {
     const { postsByTag } = require('./_data/postsByTag.js');
+    // Dedupe by slug: each post is in `postsByTag` once per tag (because
+    // the data file groups by tag), so flattening the tag arrays naively
+    // duplicates every post 2-4 times. Walk the per-tag arrays and keep
+    // only the first occurrence of each slug.
+    const seen = new Set();
     const out = [];
     for (const arr of Object.values(postsByTag || {})) {
-      for (const p of arr) out.push(p);
+      for (const p of arr) {
+        const k = p.fileSlug || p.url;
+        if (k && !seen.has(k)) {
+          seen.add(k);
+          out.push(p);
+        }
+      }
     }
     out.sort((a, b) => {
       const ad = a.date ? new Date(a.date).getTime() : 0;
