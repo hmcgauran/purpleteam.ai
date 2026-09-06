@@ -1,7 +1,7 @@
 ---
 title: "Your Purple Team Test Failed Because Your Threat Model Is Wrong"
 slug: "purple-team-threat-model-wrong"
-date: 2026-03-20
+date: 2026-03-19
 tags:
   - "Purple Teaming"
   - post

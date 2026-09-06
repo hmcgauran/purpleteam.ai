@@ -1,7 +1,7 @@
 ---
 title: "Living Off the Land: Why the Best Attackers Don't Look Like Attackers"
 slug: "living-off-the-land"
-date: 2026-05-15
+date: 2026-05-14
 tags:
   - "Detection Engineering"
   - "Red Team"

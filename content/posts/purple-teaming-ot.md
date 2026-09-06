@@ -1,7 +1,7 @@
 ---
 title: "Purple Teaming OT: Why \"We Can't Test That\" Is No Longer Acceptable"
 slug: "purple-teaming-ot"
-date: 2026-04-24
+date: 2026-04-23
 tags:
   - "OT Security"
   - "Purple Teaming"

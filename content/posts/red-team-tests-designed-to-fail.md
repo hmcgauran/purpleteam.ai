@@ -1,7 +1,7 @@
 ---
 title: "Why Your Red Team Tests Are Designed to Fail, And You Don't Know It"
 slug: "red-team-tests-designed-to-fail"
-date: 2026-04-03
+date: 2026-04-02
 tags:
   - "Purple Teaming"
   - post

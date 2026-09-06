@@ -1,7 +1,7 @@
 ---
 title: "Purple Teaming That Actually Works: A Framework for Real Collaboration"
 slug: "purple-teaming-that-actually-works"
-date: 2026-04-10
+date: 2026-04-09
 tags:
   - "Purple Teaming"
   - post

@@ -1,7 +1,7 @@
 ---
 title: "How to Run a Purple Team Exercise When Nobody Has Done One Before"
 slug: "how-to-run-a-purple-team-exercise-when-nobody-has-done-one-before"
-date: 2026-07-31
+date: 2026-07-30
 tags:
   - "Purple Teaming"
   - post

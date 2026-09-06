@@ -1,7 +1,7 @@
 ---
 title: "The 7 Most Pointless Findings in OT Pen Tests"
 slug: "seven-pointless-ot-pen-test-findings"
-date: 2026-05-01
+date: 2026-04-30
 tags:
   - "OT Security"
   - "Purple Teaming"

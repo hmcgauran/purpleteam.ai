@@ -1,7 +1,7 @@
 ---
 title: "Detection Engineering in a Real Environment: Why Generic Rules Fail"
 slug: "detection-engineering-real-environment"
-date: 2026-03-27
+date: 2026-03-26
 tags:
   - "Purple Teaming"
   - post

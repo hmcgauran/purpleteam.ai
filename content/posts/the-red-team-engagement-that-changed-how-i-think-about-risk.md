@@ -1,7 +1,7 @@
 ---
 title: "The Red Team Engagement That Changed How I Think About Risk"
 slug: "the-red-team-engagement-that-changed-how-i-think-about-risk"
-date: 2026-07-03
+date: 2026-07-02
 tags:
   - "Red Team"
   - "Purple Teaming"
