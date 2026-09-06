@@ -1,8 +1,13 @@
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-header__brand" href="/" aria-label="{{ site.title }} home">
-      <img class="site-header__mark" src="/assets/brand-mark.svg" alt="" width="36" height="36" aria-hidden="true">
-      <span class="site-header__brand-name">{{ site.title }}</span>
+      <svg class="site-header__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="8" fill="var(--accent-wash)"/>
+        <circle cx="12" cy="12" r="5" fill="var(--red)" opacity=".9"/>
+        <circle cx="20" cy="12" r="5" fill="var(--blue)" opacity=".9"/>
+        <circle cx="16" cy="20" r="5.4" fill="var(--accent)"/>
+      </svg>
+      <span class="site-header__wordmark">PurpleTeam<em>AI</em></span>
     </a>
     <nav class="site-nav" aria-label="Primary">
       <ul>
@@ -11,7 +16,35 @@
         <li><a href="/about/" {% if page.url.startsWith('/about') %}aria-current="page"{% endif %}>About</a></li>
         <li><a href="/feed.xml">RSS</a></li>
       </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" data-theme-toggle>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
     </nav>
-    {# Theme toggle is rendered here in Phase 2. #}
   </div>
+  <script>
+    // Theme toggle. Reads / writes localStorage('pt-theme'). If unset, the
+    // OS preference is honoured via CSS. Manual override beats OS.
+    (function () {
+      var btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme');
+        var sys = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = cur === 'dark' || (cur == null && sys);
+        var next = isDark ? 'light' : 'dark';
+        if (next === 'dark' || next === 'light') {
+          document.documentElement.setAttribute('data-theme', next);
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        try { localStorage.setItem('pt-theme', next); } catch (_) {}
+      });
+    })();
+  </script>
 </header>

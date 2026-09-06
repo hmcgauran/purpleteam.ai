@@ -1,38 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="PurpleTeamAI">
-  <defs>
-    <linearGradient id="mark-accent" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%"   stop-color="currentColor" stop-opacity="1"/>
-      <stop offset="100%" stop-color="currentColor" stop-opacity="0.55"/>
-    </linearGradient>
-  </defs>
-  <!-- The mark is built from negative space within a square. A bold H sits
-       in the lower-left two-thirds. Twelve short tick marks run along the
-       top edge representing the launch series of essays. Rendered in
-       currentColor so the same SVG works as a dark-on-light or
-       light-on-dark mark depending on the parent's colour. -->
-  <g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter">
-    <!-- H structure: two verticals + crossbar -->
-    <line x1="30" y1="40" x2="30" y2="100"/>
-    <line x1="78" y1="40" x2="78" y2="100"/>
-    <line x1="30" y1="70" x2="78" y2="70"/>
-    <!-- 12 tick marks: representing the launch series -->
-    <g stroke-width="6">
-      <line x1="14"  y1="16" x2="14"  y2="28"/>
-      <line x1="24"  y1="16" x2="24"  y2="28"/>
-      <line x1="34"  y1="16" x2="34"  y2="28"/>
-      <line x1="44"  y1="16" x2="44"  y2="28"/>
-      <line x1="54"  y1="16" x2="54"  y2="28"/>
-      <line x1="64"  y1="16" x2="64"  y2="28"/>
-      <line x1="74"  y1="16" x2="74"  y2="28"/>
-      <line x1="84"  y1="16" x2="84"  y2="28"/>
-      <line x1="94"  y1="16" x2="94"  y2="28"/>
-      <line x1="104" y1="16" x2="104" y2="28"/>
-      <line x1="114" y1="16" x2="114" y2="28"/>
-      <!-- Last tick is the accent: a full bar that becomes the masthead underline -->
-      <line x1="124" y1="16" x2="124" y2="32" stroke="url(#mark-accent)" stroke-width="8"/>
-    </g>
-    <!-- A subtle accent dot in the negative space inside the H -->
-    <circle cx="54" cy="55" r="3" fill="currentColor" stroke="none" opacity="0.45"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect x="1" y="1" width="30" height="30" rx="8" fill="#EFE9FB"/>
+  <circle cx="12" cy="12" r="5" fill="#B3282E" opacity=".9"/>
+  <circle cx="20" cy="12" r="5" fill="#1E5AA8" opacity=".9"/>
+  <circle cx="16" cy="20" r="5.4" fill="#6C2BD9"/>
 </svg>
