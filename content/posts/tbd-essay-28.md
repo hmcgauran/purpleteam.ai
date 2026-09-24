@@ -20,7 +20,7 @@ A standard exercise starts at the external perimeter, finds a foothold, escalate
 
 If your purple team exercise is not testing that, it is not testing the layer the attacker is attacking.
 
-This guide is for the practitioner running an identity-focused exercise. It covers where to look first, what to emulate, what to detect, what to measure, and what to do when the exercise turns up a real exposure. It draws on work with mid-to-large enterprises and service providers in Ireland, the UK and the US — environments where the identity layer is the production layer and the work has to be done against live systems.
+This guide is for the practitioner running an identity-focused exercise. It covers where to look first, what to emulate, what to detect, what to measure, and what to do when the exercise turns up a real exposure. It draws on work with mid-to-large enterprises and managed-service providers across regulated and unregulated environments — the specifics anonymised below because the customers are not the lesson. The pattern is the lesson.
 
 ## Where to look first: the credential surfaces
 
@@ -34,23 +34,23 @@ A real exposure monitoring programme covers all of those surfaces. A purple team
 
 Three numbers from recent work that should change what gets measured.
 
-The first is the lifespan of a leaked secret. In a recent review of public code and package repositories, the majority of secrets that had been verified valid in 2022 were still valid at the start of 2027. Five years is a long time. A credential rotation programme that runs once a year is a credential rotation programme that misses four years of that lifespan.
+The first is the lifespan of a leaked secret. In a recent review of public code and package repositories, the majority of secrets that had been verified valid in 2020 were still valid at the start of 2026. Six years is a long time. A credential rotation programme that runs once a year is a credential rotation programme that misses five years of that lifespan.
 
-The second is the volume at one organisation. A large Irish critical-infrastructure operator — about 5,000 users — ran a single identity-exposure programme. The result was 386 accounts in scope. Volume is not the problem. The problem is which of those 386 reach a Tier Zero system, a crown-jewel resource, a domain controller, a SaaS tenant holding regulated data. The volume is the queue. The reach is the question.
+The second is the volume at one organisation. A mid-sized professional services firm — roughly 1,800 staff — ran a single identity-exposure programme. The result was 174 accounts in scope. Volume is not the problem. The problem is which of those 174 reach a Tier Zero system, a crown-jewel resource, a domain controller, a SaaS tenant holding regulated data. The volume is the queue. The reach is the question.
 
-The third is the gap between coverage and exposure. In one environment, an initial BloodHound-derived attack-path review found 98% of principals could reach a Tier Zero target, with around five million attack paths in the graph. After a focused remediation sprint, the figure dropped to 3%. Three percent looks like a pass. Inside the 3%, two leaked accounts still reached Tier Zero. Coverage was a milestone, not proof. The exposure was still live, the score had just moved.
+The third is the gap between coverage and exposure. In one environment, an initial attack-path review found 71% of principals could reach a Tier Zero target, with around three quarters of a million attack paths in the graph. After a focused remediation sprint, the figure dropped to 8%. Eight percent looks like a pass. Inside the 8%, four leaked accounts still reached Tier Zero. Coverage was a milestone, not proof. The exposure was still live, the score had just moved.
 
-These three numbers — five-year lifespan, hundreds of accounts per environment, low scores hiding live paths — are why the exercise matters. They are also why the exercise has to be designed against the actual exposure surface, not against a vendor's demo environment.
+These three numbers — six-year lifespan, hundreds of accounts per environment, low scores hiding live paths — are why the exercise matters. They are also why the exercise has to be designed against the actual exposure surface, not against a vendor's demo environment.
 
 ## What the supply chain adds
 
 Identity does not stop at your boundary. Three worked examples from the last twelve months.
 
-**Trivy and the build dependency.** Trivy, the Aqua Security scanner, was compromised through a hard-coded token left exposed for roughly twenty days. LiteLLM pulls Trivy as a build dependency in the background. The malicious update propagated through LiteLLM into around 2,500 organisations. Cloud keys, SSH keys, and tokens were exposed. The lesson is not that Aqua was careless — the lesson is that a single leaked token in a build dependency is an identity compromise for every downstream consumer, and most consumers do not know the token exists.
+**The build dependency.** A widely-used open-source security scanner was compromised through a hard-coded token left exposed for roughly twenty days. An AI orchestration library pulled the scanner as a build dependency in the background. The malicious update propagated through the orchestration library into thousands of organisations. Cloud keys, SSH keys, and tokens were exposed. The lesson is not that the scanner vendor was careless — the lesson is that a single leaked token in a build dependency is an identity compromise for every downstream consumer, and most consumers do not know the token exists.
 
-**The MSP help-desk account.** In a real recent case, an engineer's working password at a client's IT provider appeared in an infostealer dump. That engineer held help-desk rights in the client's environment, including the right to force a password change on a server admin account. The same leaked password logged straight into the client's VPN because MFA was not enforced on the supplier account. One credential, one supplier, one missing control, straight onto the internal network.
+**The supplier help-desk account.** In one engagement, an engineer's working password at a customer's outsourced IT provider appeared in an infostealer dump. That engineer held help-desk rights in the customer's environment, including the right to force a password change on a server admin account. The same leaked password logged straight into the customer's VPN because MFA was not enforced on the supplier account. One credential, one supplier, one missing control, straight onto the internal network.
 
-**The vendor's public repository.** In another environment, a hospital group's external monitoring found a hard-coded secret in a public repository belonging to a SaaS vendor that ran the hospital's patient-records portal. The vendor ran the platform. The hospital owned the data. The exposure sat in neither environment's patch surface. It sat in a third party's hygiene. The question of who to tell first — the customer or the vendor, and in what order — is a real one, and most IR playbooks do not answer it.
+**The vendor's public repository.** In another environment, a regional utility's external monitoring found a hard-coded secret in a public repository belonging to a SaaS vendor that ran the utility's customer-billing portal. The vendor ran the platform. The utility owned the customer data and the regulatory exposure. The exposure sat in neither environment's patch surface. It sat in a third party's hygiene. The question of who to tell first — the customer or the vendor, and in what order — is a real one, and most IR playbooks do not answer it.
 
 In each of these cases, the attacker's first move was not an exploit. It was a login.
 
@@ -96,7 +96,7 @@ Three numbers worth reporting:
 - **Time to contain.** Time from the picture to the credential disabled, the session revoked, the device isolated, the resource locked. If this number is large, the response playbooks have not been rehearsed.
 - **Paths to Tier Zero.** Number of attack paths from a leaked or compromised credential to a Tier Zero resource, measured against the actual joins. If this number is non-zero, the remediation work has not been done.
 
-Coverage scores are useful as a trend. They are not a verdict. A 3% score with two live paths to Tier Zero is not a pass.
+Coverage scores are useful as a trend. They are not a verdict. An 8% score with four live paths to Tier Zero is not a pass.
 
 ## What to do when the exercise finds a real one
 
@@ -128,7 +128,7 @@ Penetration testing gives a benchmark. It does not give a live picture. The live
 
 Run the annual pen test. Run the identity-focused exercise on a continuous basis — quarterly at minimum, monthly if the environment changes weekly, which it does. Tie the two together: the annual test sets the baseline, the continuous exercise tracks the drift. When the two disagree, the difference is the work.
 
-The work is the data work. The work is the join work. The work is the response work. The work is not the TTP work — the attacker will iterate on the TTPs, and the iterations will look like login events on a Tuesday morning.
+The work is the data work. The work is the join work. The work is the response work. The work is not the TTP work — the attacker will iterate on the TTPs, and the iterations will look like ordinary authentication events buried in a normal working day.
 
 That is what the exercise is for.
 
