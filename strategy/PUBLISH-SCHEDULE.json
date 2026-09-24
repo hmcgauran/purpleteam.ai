@@ -334,6 +334,21 @@
         "Purple Teaming",
         "Tabletop"
       ]
+    },
+    {
+      "id": "post-28",
+      "number": 28,
+      "title": "Purple Teaming Your Identity Environment: Where the Real Attacks Live Now",
+      "file": "tbd-essay-28.md",
+      "publishDate": "2026-09-24",
+      "approved": true,
+      "tags": [
+        "Purple Teaming",
+        "Identity",
+        "Detection Engineering",
+        "Red Team",
+        "post"
+      ]
     }
   ]
 }

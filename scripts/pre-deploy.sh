@@ -56,6 +56,7 @@ expected_essays=(
   "essays/how-to-build-an-insider-risk-programme-that-actually-catches-the-bad-cases/"
   "essays/how-to-threat-model-a-system-you-have-never-seen-before/"
   "essays/what-a-good-ics-detection-looks-like-in-practice/"
+  "essays/purple-teaming-your-identity-environment/"
 )
 
 echo "→ Checking ${#expected_essays[@]} essay URLs"
