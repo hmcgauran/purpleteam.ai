@@ -1,5 +1,5 @@
 ---
-title: "Purple Teaming Your Identity Environment: Where the Real Attacks Live Now"
+title: "Purple Teaming Identity Systems: A Practitioner's Guide"
 slug: "purple-teaming-your-identity-environment"
 date: 2026-09-24
 tags:
@@ -9,75 +9,129 @@ tags:
   - "Red Team"
   - post
 author: Hugh McGauran
-excerpt: "Most purple team exercises still treat identity as the perimeter you walk through on the way to the real objective. It is not. It is the objective. Here is how to run a purple team exercise that is actually about identity"
+excerpt: "Identity is the perimeter most attackers now attack first. This is the guide to a purple team exercise that actually tests it: where to look, what to emulate, what to detect, what to measure, and what to do when the exercise finds a real one"
 layout: layouts/post.njk
 permalink: /essays/purple-teaming-your-identity-environment/
 ---
 
-Most purple team exercises still treat identity as the perimeter you walk through on the way to the real objective. The real objective is the file server. The real objective is the domain controller. The real objective is the production database. The real objective is the SaaS tenant where the customer data lives. Identity is the front door you walk through on the way to the real objective.
+Most purple team exercises still test the wrong layer.
 
-That view was correct in 2014. It is wrong now.
+A standard exercise starts at the external perimeter, finds a foothold, escalates, pivots, and reports on time-to-detect for the techniques it used. The technique is what gets reported, not the outcome. The attacker is no longer running that exercise. The attacker is logging in with a valid credential that was leaked, exposed, or stolen from a third party the legitimate user has never heard of. The perimeter is not the target. The credential is the target. The credential, the session it opens, and the resources the session can reach are the target.
 
-The identity layer is the objective. The identity layer is the place where the attacker wins. The identity layer is the place where the defender has to be able to detect. The identity layer is the place where the purple team exercise has to live.
+If your purple team exercise is not testing that, it is not testing the layer the attacker is attacking.
 
-If your purple team exercise is not spending most of its time in the identity layer, your purple team exercise is not testing the layer where the attacks live.
+This guide is for the practitioner running an identity-focused exercise. It covers where to look first, what to emulate, what to detect, what to measure, and what to do when the exercise turns up a real exposure. It draws on work with mid-to-large enterprises and service providers in Ireland, the UK and the US — environments where the identity layer is the production layer and the work has to be done against live systems.
 
-## Why identity is now the objective
+## Where to look first: the credential surfaces
 
-The reason identity is now the objective is that the rest of the environment has got harder to attack. The reason the rest of the environment has got harder to attack is that endpoint detection has matured, network segmentation has improved, and the cloud providers have done most of the infrastructure security work for the average enterprise.
+A credential is anything that authenticates: a username and password, a service account key, an OAuth refresh token, an API key in a CI pipeline, a session cookie on a managed device, an SSH key on a jump host, an SSH key on a contractor's laptop, a personal access token on a developer's personal GitHub repository, an AI tool's API key pasted into a config file, a vendor's help-desk password reused on three customer VPNs.
 
-Identity has not got harder to attack for the same reason. The attacker needs to find one valid credential; the defender needs to detect one anomalous use of that valid credential. The asymmetry is brutal. The attacker needs to win once. The defender needs to win every time. The attacker can use a credential that is technically legitimate. The defender has to decide whether the use of the credential is legitimate.
+Most of those credentials are not in your environment. They are in the environments around yours: the personal repos of your staff, the public packages your code depends on, the SaaS tools your business runs on a credit card, the help-desk accounts your MSP uses to administer your tenant, the OAuth tokens your AI assistants hold to talk to your data. The exposure you are looking for is the exposure you do not control. That is what "outside in" actually means in identity terms: the credential you have never seen is the credential that gets you owned.
 
-The attacker also does not need to exploit a vulnerability. The attacker needs to log in. The attacker logs in with a valid credential. The attacker logs in from a valid device. The attacker logs in during business hours. The attacker logs in and does the things the user normally does. The defender has to find the one thing the attacker is doing that is not normal. The defender is looking for a needle in a stack of needles.
+A real exposure monitoring programme covers all of those surfaces. A purple team exercise that wants to test the identity layer starts there, because that is where the attacker starts.
 
-A purple team that does not replicate that asymmetry is not testing the layer where the attacks live.
+## The numbers that make this urgent
 
-## The inputs the exercise needs
+Three numbers from recent work that should change what gets measured.
 
-A purple team exercise that is actually about identity needs the data sources the SOC analyst can query, join, and pivot through during an investigation. It does not need the theoretical identity analytics the vendor sells. It needs the sources the analyst will be expected to use at 02:00 when the alert fires.
+The first is the lifespan of a leaked secret. In a recent review of public code and package repositories, the majority of secrets that had been verified valid in 2022 were still valid at the start of 2027. Five years is a long time. A credential rotation programme that runs once a year is a credential rotation programme that misses four years of that lifespan.
 
-Authentication logs and MFA challenge logs are the obvious ones. Conditional access decision logs and session logs sit alongside them — the logs that record what was allowed, what was blocked, and what token was issued. OAuth consent logs and service principal logs matter as much, because the attacker is no longer logging in as a person. Workload identity logs are now part of the same picture.
+The second is the volume at one organisation. A large Irish critical-infrastructure operator — about 5,000 users — ran a single identity-exposure programme. The result was 386 accounts in scope. Volume is not the problem. The problem is which of those 386 reach a Tier Zero system, a crown-jewel resource, a domain controller, a SaaS tenant holding regulated data. The volume is the queue. The reach is the question.
 
-Beyond the identity provider itself, the joins are what make the exercise meaningful. Directory, access management, privileged access management, secrets manager, DLP, email, and endpoint all sit alongside identity. A join on identity, session, device, resource, and time is what lets the analyst answer the questions that matter: who, what, when, where, why, and how do we contain this.
+The third is the gap between coverage and exposure. In one environment, an initial BloodHound-derived attack-path review found 98% of principals could reach a Tier Zero target, with around five million attack paths in the graph. After a focused remediation sprint, the figure dropped to 3%. Three percent looks like a pass. Inside the 3%, two leaked accounts still reached Tier Zero. Coverage was a milestone, not proof. The exposure was still live, the score had just moved.
 
-A purple team exercise that is not testing the joins is not testing the analyst's ability to investigate. It is testing whether a single log line fires.
+These three numbers — five-year lifespan, hundreds of accounts per environment, low scores hiding live paths — are why the exercise matters. They are also why the exercise has to be designed against the actual exposure surface, not against a vendor's demo environment.
 
-## The TTPs that actually look like the attack
+## What the supply chain adds
 
-The TTPs the attacker is going to run against your environment are not the TTPs that demonstrate a vulnerability. They are the TTPs that demonstrate the attacker's ability to use a valid credential to do the thing the user would normally do.
+Identity does not stop at your boundary. Three worked examples from the last twelve months.
 
-They start with the credential, obtained through a realistic means. Phishing. A session cookie stolen from a local device. A leaked token from a third-party breach. A personal device compromise. The credential is valid. The user is real. The session is real.
+**Trivy and the build dependency.** Trivy, the Aqua Security scanner, was compromised through a hard-coded token left exposed for roughly twenty days. LiteLLM pulls Trivy as a build dependency in the background. The malicious update propagated through LiteLLM into around 2,500 organisations. Cloud keys, SSH keys, and tokens were exposed. The lesson is not that Aqua was careless — the lesson is that a single leaked token in a build dependency is an identity compromise for every downstream consumer, and most consumers do not know the token exists.
 
-Then the credential is used. Log in. Access the resources the user has access to. Enumerate the access. Establish persistence. Move laterally to the resources the user has access to. The pattern is not loud. It does not trip the legacy detections. It looks like a user working. It uses a valid credential, on a valid device, during business hours, doing the things the user would normally do.
+**The MSP help-desk account.** In a real recent case, an engineer's working password at a client's IT provider appeared in an infostealer dump. That engineer held help-desk rights in the client's environment, including the right to force a password change on a server admin account. The same leaked password logged straight into the client's VPN because MFA was not enforced on the supplier account. One credential, one supplier, one missing control, straight onto the internal network.
 
-The purple team that emulates that pattern — and only that pattern — is testing the layer where the attacks live. The purple team that emulates Kerberoasting, Pass-the-Hash, and NTLM relay in isolation is testing a layer that the attacker is no longer trying to attack first.
+**The vendor's public repository.** In another environment, a hospital group's external monitoring found a hard-coded secret in a public repository belonging to a SaaS vendor that ran the hospital's patient-records portal. The vendor ran the platform. The hospital owned the data. The exposure sat in neither environment's patch surface. It sat in a third party's hygiene. The question of who to tell first — the customer or the vendor, and in what order — is a real one, and most IR playbooks do not answer it.
 
-## The detections that matter
+In each of these cases, the attacker's first move was not an exploit. It was a login.
 
-The detections that matter are the detections that fire on the TTPs above. They are not the detections that fire on the legacy authentication anomalies. They are the detections that fire on the specific actions the attacker is taking against the specific resources the attacker is targeting.
+## What to emulate in the exercise
 
-Impossible travel. MFA fatigue. Session anomaly. Token replay. OAuth consent. Workload identity. Conditional access bypass. Data access anomaly. Data egress anomaly. The list is well known. The list is rarely tested against the specific environment with the specific joins wired up.
+A purple team that is emulating Kerberoasting, Pass-the-Hash, and NTLM relay in isolation is testing a layer the attacker is no longer trying to attack first. Those techniques still matter. They are not the first move.
 
-A detection that fires on a single log line is not a detection. A detection is a signal that survives the SOC analyst joining it to identity, session, device, and resource — and that survives that analyst making a decision. A purple team exercise that produces a report full of single-line detections is producing a report full of things the analyst will close in the queue.
+The first move, in the environments where the work is happening now, looks like one of these:
 
-## The outcome the exercise is for
+- A leaked credential surfaced from a public repository, an infostealer dump, or a third-party breach, used to log in via the legitimate entry point — VPN, IdP, SaaS console, supplier portal.
+- An OAuth refresh token replayed from a session cookie stolen from a personal device. The token is valid. The session is valid. The user is the user's IP, in the user's browser, in the user's normal pattern.
+- A service-account key from a CI pipeline or build dependency used to authenticate against a cloud control plane or internal API.
+- A supplier's help-desk account used to reset a privileged password inside the customer environment. The supplier is trusted. The reset is routine. The follow-on is the attacker.
+- An AI assistant's API key pasted into a config file, used to read a customer tenant because nobody rotated the key after the assistant was onboarded.
 
-The outcome of a purple team exercise on the identity layer is not the time to detect. The outcome is not the number of detections that fired. The outcome is not the number of TTPs that were blocked.
+Each of these is a credential. Each is valid. Each logs in. The defender has to spot the one thing the attacker is doing that is not normal. The defender is looking for a needle in a stack of needles.
 
-The outcome is the SOC analyst's ability to investigate — to pivot from the detection to the identity, from the identity to the session, from the session to the device, from the device to the resource, from the resource to the data, from the data to the action. The outcome is the SOC analyst's ability to answer the questions that matter and act on them before the attacker does the thing the attacker is trying to do.
+The exercise should emulate at least three of these patterns. A single TTP is a demo. A pattern is a test.
 
-The outcome is the response. Revoke the session. Invalidate the token. Disable the credential. Isolate the device. The detections are the input. The response is the output. A purple team exercise that does not measure whether the response is possible has not finished its work — it has only finished its demo.
+## What to detect
+
+The detections that matter are not the detections that fire on a single log line. They are the detections that survive the SOC analyst joining them to identity, session, device, resource, and time.
+
+That join is the detection. Without it, the analyst sees an authentication event and closes the queue. With it, the analyst sees an authentication event from a session that has never come from this device, against a resource this identity has never touched, at an hour this identity has never worked.
+
+Five joins the exercise needs to verify are wired up:
+
+- **Identity to session.** Authentication event, session token, refresh event. Without this, session anomaly detections are blind.
+- **Session to device.** Managed, compliant, posture-checked. Without this, conditional access bypass detections are blind.
+- **Identity to resource.** What this identity can normally read, write, export. Without this, data access anomaly detections are blind.
+- **Identity to time.** When this identity normally works, from where. Without this, impossible-travel detections are blind.
+- **Credential to identity.** Which credential authenticated which session, and was that credential on a watch list. Without this, infostealer-log replay detections are blind.
+
+If the exercise cannot verify those joins exist and work, the report it produces is a report on what would have been detected if the data had been there. That is a data report, not a detection report.
+
+## What to measure
+
+The exercise is not a success when the SOC detects the test. The exercise is a success when the SOC can answer the questions that matter — who, what, when, where, why, and how do we contain this — and can act on the answers before the attacker finishes.
+
+Three numbers worth reporting:
+
+- **Time to investigate.** Not time to detect. Time from the first signal to the analyst having a picture of identity, session, device, resource, and time joined. If this number is large, the data work has not been done.
+- **Time to contain.** Time from the picture to the credential disabled, the session revoked, the device isolated, the resource locked. If this number is large, the response playbooks have not been rehearsed.
+- **Paths to Tier Zero.** Number of attack paths from a leaked or compromised credential to a Tier Zero resource, measured against the actual joins. If this number is non-zero, the remediation work has not been done.
+
+Coverage scores are useful as a trend. They are not a verdict. A 3% score with two live paths to Tier Zero is not a pass.
+
+## What to do when the exercise finds a real one
+
+It will. A focused identity exercise against a real environment almost always turns up a real exposure: a leaked credential, a forgotten service account, a supplier password that does not have MFA, a SaaS integration token that has not been rotated in years.
+
+When it does:
+
+1. **Disable the credential first.** Revoke, invalidate, kill the session. Speed matters more than completeness on the first hour.
+2. **Trace the reach.** From the credential, what could the attacker have done? Join to identity, to resource, to Tier Zero. The answer drives the severity and the comms.
+3. **Fix the control that made the credential survivable.** MFA on the supplier account. Rotation on the API key. Ownership assignment on the service account. The credential was the symptom. The control gap was the disease.
+4. **Extend the search.** If one leaked credential reached Tier Zero, others will. Run the same trace against the rest of the surface — same vendor, same leak source, same time window.
+5. **Tell the supplier, or the customer, or both.** Use the playbook. If the playbook does not exist, write it down. The "who do we tell first" question deserves an answer before the next incident, not during it.
+
+The exercise has paid for itself the first time it produces a real find. Everything before that find was preparation.
 
 ## What an identity-focused exercise actually looks like
 
-Small. Focused. Well-resourced.
+Three to five realistic credential scenarios, each sourced from a plausible leak path the environment actually exposes. Phishing-to-MFA-fatigue-to-token-replay. Infostealer-log-to-VPN. Supplier-help-desk-to-privileged-reset. Build-dependency-leak-to-cloud-control-plane. AI-assistant-API-key-to-data-tenant. Pick the three that match the environment's actual exposure surface.
 
-Three to five realistic credential scenarios, each sourced from a plausible leak path. Each scenario tested against the joins the SOC analyst will actually have at 02:00. Each scenario measured on whether the analyst can answer who, what, when, where, why, and contain — not on whether the legacy detection fired.
+Each scenario tested against the joins the SOC analyst will actually have at 02:00. Each scenario measured on investigation time, containment time, and paths to Tier Zero. Each scenario producing one real find or one real gap — and the gap fixed before the report is written.
 
-If the exercise cannot be run that small, the identity layer is not yet ready to be purple teamed — and the work that needs to happen first is the data work, not the TTP work. Most programmes learn this the hard way: the exercise was scheduled, the joins were not wired up, the report said the SOC missed the detection, and the SOC missed the detection because the SOC did not have the data to see it.
+If the exercise cannot be run that small, the identity layer is not yet ready to be purple teamed. The work that needs to happen first is the data work, not the TTP work. Most programmes learn this the hard way: the exercise was scheduled, the joins were not wired up, the report said the SOC missed the detection, and the SOC missed the detection because the SOC did not have the data to see it.
 
-The honest scope of an identity-focused purple team exercise is the data work that makes the investigation possible. Everything else is decoration.
+## What this means for the annual cycle
+
+The annual penetration test is not dead. The annual penetration test as the whole programme is dead.
+
+Penetration testing gives a benchmark. It does not give a live picture. The live picture is what an identity-focused purple team exercise produces, run against the joins that are actually wired up, against the credentials that are actually exposed, with the response playbooks that are actually rehearsed.
+
+Run the annual pen test. Run the identity-focused exercise on a continuous basis — quarterly at minimum, monthly if the environment changes weekly, which it does. Tie the two together: the annual test sets the baseline, the continuous exercise tracks the drift. When the two disagree, the difference is the work.
+
+The work is the data work. The work is the join work. The work is the response work. The work is not the TTP work — the attacker will iterate on the TTPs, and the iterations will look like login events on a Tuesday morning.
+
+That is what the exercise is for.
 
 ---
 
-This essay is part of an ongoing series on purple teaming in environments where identity is the perimeter. If you are running identity-layer exercises and want to compare notes on joins, TTPs, or measurement, I would rather hear from you than guess.
+This essay is the second in a series on purple teaming in environments where identity is the perimeter. The first was [Purple Teaming Your Identity Environment: Where the Real Attacks Live Now](/essays/purple-teaming-your-identity-environment/). The next will cover the response side: what good containment looks like against a credential-driven intrusion.
