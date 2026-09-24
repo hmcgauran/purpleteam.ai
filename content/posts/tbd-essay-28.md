@@ -26,66 +26,58 @@ If your purple team exercise is not spending most of its time in the identity la
 
 The reason identity is now the objective is that the rest of the environment has got harder to attack. The reason the rest of the environment has got harder to attack is that endpoint detection has matured, network segmentation has improved, and the cloud providers have done most of the infrastructure security work for the average enterprise.
 
-The reason identity has not got harder to attack is that identity is still the layer where the attacker needs to find one valid credential and the defender needs to detect one anomalous use of that valid credential. The asymmetry is brutal. The attacker needs to win once. The defender needs to win every time. The attacker can use a credential that is technically legitimate. The defender has to decide whether the use of the credential is legitimate.
+Identity has not got harder to attack for the same reason. The attacker needs to find one valid credential; the defender needs to detect one anomalous use of that valid credential. The asymmetry is brutal. The attacker needs to win once. The defender needs to win every time. The attacker can use a credential that is technically legitimate. The defender has to decide whether the use of the credential is legitimate.
 
-The reason identity has not got harder to attack is also that the attacker does not need to exploit a vulnerability. The attacker needs to log in. The attacker logs in with a valid credential. The attacker logs in from a valid device. The attacker logs in during business hours. The attacker logs in and does the things the user normally does. The defender has to find the one thing the attacker is doing that is not normal. The defender is looking for a needle in a stack of needles.
+The attacker also does not need to exploit a vulnerability. The attacker needs to log in. The attacker logs in with a valid credential. The attacker logs in from a valid device. The attacker logs in during business hours. The attacker logs in and does the things the user normally does. The defender has to find the one thing the attacker is doing that is not normal. The defender is looking for a needle in a stack of needles.
 
-## The wrong purple team
+A purple team that does not replicate that asymmetry is not testing the layer where the attacks live.
 
-The wrong purple team exercise is the exercise that runs a few credential dumping TTPs, exfiltrates the NTLM hashes, cracks a password, and documents the time to detection. The wrong purple team exercise is the exercise that demonstrates a Kerberoasting attack against a service account and documents the detection that fires on the encryption downgrade. The wrong purple team exercise is the exercise that shows the blue team can detect a Pass-the-Hash attack and concludes the identity layer is covered.
+## The inputs the exercise needs
 
-The wrong purple team exercise misses the point because the wrong purple team exercise is testing the technique, not the outcome. The wrong purple team exercise is testing the detection engineering. The wrong purple team exercise is not testing the defender's ability to detect the attack that the attacker is actually going to run.
+A purple team exercise that is actually about identity needs the data sources the SOC analyst can query, join, and pivot through during an investigation. It does not need the theoretical identity analytics the vendor sells. It needs the sources the analyst will be expected to use at 02:00 when the alert fires.
 
-The attack the attacker is actually going to run is the attack that uses a valid credential that the attacker has obtained through phishing, through session theft, through a leaked token, through a personal device compromise, or through a third-party breach. The attack the attacker is actually going to run does not exploit a vulnerability. The attack the attacker is actually going to run logs in.
+Authentication logs and MFA challenge logs are the obvious ones. Conditional access decision logs and session logs sit alongside them — the logs that record what was allowed, what was blocked, and what token was issued. OAuth consent logs and service principal logs matter as much, because the attacker is no longer logging in as a person. Workload identity logs are now part of the same picture.
 
-## The right inputs
+Beyond the identity provider itself, the joins are what make the exercise meaningful. Directory, access management, privileged access management, secrets manager, DLP, email, and endpoint all sit alongside identity. A join on identity, session, device, resource, and time is what lets the analyst answer the questions that matter: who, what, when, where, why, and how do we contain this.
 
-The right inputs are the data sources that actually exist in your environment and that you actually have access to. The right inputs are not the theoretical identity analytics that the vendor sells. The right inputs are the data sources the SOC analyst can query, join, and pivot through during an investigation.
+A purple team exercise that is not testing the joins is not testing the analyst's ability to investigate. It is testing whether a single log line fires.
 
-The right inputs include the identity provider logs. The right inputs include the authentication logs. The right inputs include the conditional access decision logs. The right inputs include the MFA challenge logs. The right inputs include the session logs. The right inputs include the device compliance logs. The right inputs include the OAuth consent logs. The right inputs include the service principal logs. The right inputs include the workload identity logs.
+## The TTPs that actually look like the attack
 
-The right inputs also include the directory. The right inputs include the access management system. The right inputs include the privileged access management system. The right inputs include the secrets manager. The right inputs include the data loss prevention system. The right inputs include the email system. The right inputs include the endpoint detection system.
+The TTPs the attacker is going to run against your environment are not the TTPs that demonstrate a vulnerability. They are the TTPs that demonstrate the attacker's ability to use a valid credential to do the thing the user would normally do.
 
-The right inputs are joined. The right inputs are joined on the identity. The right inputs are joined on the session. The right inputs are joined on the device. The right inputs are joined on the resource. The right inputs are joined so the SOC analyst can see the full picture of what the identity did, on what device, from what location, against what resource, at what time.
+They start with the credential, obtained through a realistic means. Phishing. A session cookie stolen from a local device. A leaked token from a third-party breach. A personal device compromise. The credential is valid. The user is real. The session is real.
 
-If your purple team exercise is not testing the joins, your purple team exercise is not testing the layer where the attacks live.
+Then the credential is used. Log in. Access the resources the user has access to. Enumerate the access. Establish persistence. Move laterally to the resources the user has access to. The pattern is not loud. It does not trip the legacy detections. It looks like a user working. It uses a valid credential, on a valid device, during business hours, doing the things the user would normally do.
 
-## The right TTPs
+The purple team that emulates that pattern — and only that pattern — is testing the layer where the attacks live. The purple team that emulates Kerberoasting, Pass-the-Hash, and NTLM relay in isolation is testing a layer that the attacker is no longer trying to attack first.
 
-The right TTPs are the TTPs that an attacker is actually going to run against your environment. The right TTPs are not the TTPs that demonstrate a vulnerability. The right TTPs are the TTPs that demonstrate the attacker's ability to use a valid credential to do the thing the user would normally do.
+## The detections that matter
 
-The right TTPs start with the credential. The right TTPs start with a credential the attacker has obtained through a realistic means. The credential comes from phishing. The credential comes from a session cookie stolen from a local device. The credential comes from a leaked token from a third-party breach. The credential comes from a personal device compromise.
+The detections that matter are the detections that fire on the TTPs above. They are not the detections that fire on the legacy authentication anomalies. They are the detections that fire on the specific actions the attacker is taking against the specific resources the attacker is targeting.
 
-The right TTPs then use the credential. The right TTPs use the credential to log in. The right TTPs use the credential to access the resources the user has access to. The right TTPs use the credential to enumerate the access the user has. The right TTPs use the credential to establish persistence. The right TTPs use the credential to move laterally to the resources the user has access to.
+Impossible travel. MFA fatigue. Session anomaly. Token replay. OAuth consent. Workload identity. Conditional access bypass. Data access anomaly. Data egress anomaly. The list is well known. The list is rarely tested against the specific environment with the specific joins wired up.
 
-The right TTPs are not noisy. The right TTPs do not trip the legacy detections. The right TTPs look like a user working. The right TTPs do not exploit a vulnerability. The right TTPs use a valid credential, on a valid device, during business hours, doing the things the user would normally do.
+A detection that fires on a single log line is not a detection. A detection is a signal that survives the SOC analyst joining it to identity, session, device, and resource — and that survives that analyst making a decision. A purple team exercise that produces a report full of single-line detections is producing a report full of things the analyst will close in the queue.
 
-## The right detections
+## The outcome the exercise is for
 
-The right detections are the detections that fire on the right TTPs. The right detections are not the detections that fire on the legacy authentication anomalies. The right detections are the detections that fire on the specific actions the attacker is taking against the specific resources the attacker is targeting.
+The outcome of a purple team exercise on the identity layer is not the time to detect. The outcome is not the number of detections that fired. The outcome is not the number of TTPs that were blocked.
 
-The right detections include the impossible travel detection. The right detections include the MFA fatigue detection. The right detections include the session anomaly detection. The right detections include the token replay detection. The right detections include the OAuth consent detection. The right detections include the workload identity detection. The right detections include the conditional access bypass detection. The right detections include the data access anomaly detection. The right detections include the data egress anomaly detection.
+The outcome is the SOC analyst's ability to investigate — to pivot from the detection to the identity, from the identity to the session, from the session to the device, from the device to the resource, from the resource to the data, from the data to the action. The outcome is the SOC analyst's ability to answer the questions that matter and act on them before the attacker does the thing the attacker is trying to do.
 
-The right detections are written for the specific environment. The right detections are tuned for the specific environment. The right detections are tested for the specific environment. The right detections are documented for the specific environment. The right detections are maintained for the specific environment.
+The outcome is the response. Revoke the session. Invalidate the token. Disable the credential. Isolate the device. The detections are the input. The response is the output. A purple team exercise that does not measure whether the response is possible has not finished its work — it has only finished its demo.
 
-The right detections are not the detections the vendor sells. The right detections are the detections the detection engineering function has written, the detection engineering function has tested, the detection engineering function has tuned, the detection engineering function has documented, the detection engineering function has maintained.
+## What an identity-focused exercise actually looks like
 
-## The right outcome
+Small. Focused. Well-resourced.
 
-The right outcome of a purple team exercise on the identity layer is not the time to detect. The right outcome is not the number of detections that fired. The right outcome is not the number of TTPs that were blocked.
+Three to five realistic credential scenarios, each sourced from a plausible leak path. Each scenario tested against the joins the SOC analyst will actually have at 02:00. Each scenario measured on whether the analyst can answer who, what, when, where, why, and contain — not on whether the legacy detection fired.
 
-The right outcome is the SOC analyst's ability to investigate. The right outcome is the SOC analyst's ability to pivot from the detection to the identity, from the identity to the session, from the session to the device, from the device to the resource, from the resource to the data, from the data to the action. The right outcome is the SOC analyst's ability to answer the questions that matter: who, what, when, where, why, and how do we contain this.
+If the exercise cannot be run that small, the identity layer is not yet ready to be purple teamed — and the work that needs to happen first is the data work, not the TTP work. Most programmes learn this the hard way: the exercise was scheduled, the joins were not wired up, the report said the SOC missed the detection, and the SOC missed the detection because the SOC did not have the data to see it.
 
-The right outcome is the SOC analyst's ability to contain. The right outcome is the SOC analyst's ability to revoke the session, invalidate the token, disable the credential, isolate the device, and prevent the attacker from doing the thing the attacker is trying to do. The right outcome is not the detection. The right outcome is the response.
+The honest scope of an identity-focused purple team exercise is the data work that makes the investigation possible. Everything else is decoration.
 
-If your purple team exercise is not testing the response, your purple team exercise is not testing the layer where the attacks live.
+---
 
-## The honest scope
-
-The honest scope of a purple team exercise that is actually about identity is an exercise that has the right inputs, the right TTPs, the right detections, and the right outcome. The honest scope is an exercise that is small, focused, and well-resourced.
-
-The honest scope is not an exercise that runs the legacy credential dumping TTPs and documents the time to detect. The honest scope is not an exercise that demonstrates the technique. The honest scope is not an exercise that produces a report that the SOC analyst already knows how to respond to.
-
-The honest scope is the work. The honest scope is the work the purple team has to do to test the layer where the attacks live. The honest scope is the work the purple team has to do to produce an exercise that the SOC analyst learns something from.
-
-If you are running a purple team exercise, run the right exercise. If you are running a purple team exercise, run the exercise that tests the identity layer. If you are running a purple team exercise, run the exercise that is worth the money.
+This essay is part of an ongoing series on purple teaming in environments where identity is the perimeter. If you are running identity-layer exercises and want to compare notes on joins, TTPs, or measurement, I would rather hear from you than guess.
