@@ -349,6 +349,51 @@
         "Red Team",
         "post"
       ]
+    },
+    {
+      "id": "post-29",
+      "number": 29,
+      "title": "Containing a Credential-Driven Intrusion: What Good Looks Like in the First Hour",
+      "file": "tbd-essay-29.md",
+      "publishDate": "2026-10-08",
+      "approved": true,
+      "tags": [
+        "Purple Teaming",
+        "Identity",
+        "Incident Response",
+        "Detection Engineering",
+        "post"
+      ]
+    },
+    {
+      "id": "post-30",
+      "number": 30,
+      "title": "Purple Teaming a PCI Environment: What a Generic Identity Exercise Misses",
+      "file": "tbd-essay-30.md",
+      "publishDate": "2026-10-15",
+      "approved": true,
+      "tags": [
+        "Purple Teaming",
+        "PCI",
+        "Identity",
+        "Red Team",
+        "Detection Engineering"
+      ]
+    },
+    {
+      "id": "post-31",
+      "number": 31,
+      "title": "Quarterly Cadence: How Identity Purple Teaming Survives a Year in a Regulated Environment",
+      "file": "tbd-essay-31.md",
+      "publishDate": "2026-10-22",
+      "approved": true,
+      "tags": [
+        "Purple Teaming",
+        "Identity",
+        "PCI",
+        "Detection Engineering",
+        "Programme Operations"
+      ]
     }
   ]
 }
