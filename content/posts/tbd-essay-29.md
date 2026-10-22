@@ -1,6 +1,6 @@
 ---
 title: "Containing a Credential-Driven Intrusion: What Good Looks Like in the First Hour"
-slug: "tbd-essay-29"
+slug: "containing-a-credential-driven-intrusion"
 date: 2026-10-08
 tags:
   - "Purple Teaming"
@@ -11,7 +11,7 @@ tags:
 author: Hugh McGauran
 excerpt: "Detection is half the problem. The other half is what happens in the first hour after the SOC believes the credential is real — the joins, the actions, the order, and the things the playbook never rehearsed. This is the response side of identity-focused purple teaming"
 layout: layouts/post.njk
-permalink: /essays/tbd-essay-29/
+permalink: /essays/containing-a-credential-driven-intrusion/
 ---
 
 The exercise finds the exposure. The exercise does not contain it.

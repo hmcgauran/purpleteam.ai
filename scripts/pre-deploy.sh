@@ -57,7 +57,7 @@ expected_essays=(
   "essays/how-to-threat-model-a-system-you-have-never-seen-before/"
   "essays/what-a-good-ics-detection-looks-like-in-practice/"
   "essays/purple-teaming-your-identity-environment/"
-  "essays/tbd-essay-29/"
+  "essays/containing-a-credential-driven-intrusion/"
   "essays/purple-teaming-a-pci-environment/"
   "essays/quarterly-identity-purple-team-cadence/"
 )
