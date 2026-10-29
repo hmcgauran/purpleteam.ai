@@ -162,17 +162,25 @@ fi
 git add strategy/PUBLISH-SCHEDULE.json scripts/pre-deploy.sh content/posts/ || true
 
 if git diff --cached --quiet; then
-  echo "No staged changes — nothing to commit."
-  exit 0
+  # The publish-day bump is a no-op when the schedule and the post's frontmatter
+  # already carry today's date — which is what happens when the body landed on
+  # an earlier preview-week commit. The deploy still has to run so the build's
+  # date gate promotes the post on the homepage, so push an empty commit to
+  # trigger it rather than skipping the push.
+  git commit --allow-empty -m "weekly publish: publish $TARGET_ID to $TODAY" >/dev/null
+else
+  git commit -m "weekly publish: bump $TARGET_ID to $TODAY" >/dev/null
 fi
-
-git commit -m "weekly publish: bump $TARGET_ID to $TODAY" >/dev/null
 git push origin main 2>&1 | tail -3
 
 # -----------------------------------------------------------------
 # Step 4: best-effort live URL verification (max 90s)
 # -----------------------------------------------------------------
-LIVE_URL="https://purpleteam.ai/essays/$(basename "$TARGET_FILE" .md)/"
+# Derive the URL from the post's own permalink. The filename (tbd-essay-N.md)
+# is a placeholder — the published slug lives in the frontmatter, so a
+# filename-derived URL 404s even after a successful deploy.
+PERMALINK="$(grep -m1 '^permalink:' "$POST_PATH" | sed 's/^permalink:[[:space:]]*//' | tr -d '"\r' || true)"
+LIVE_URL="https://purpleteam.ai${PERMALINK:-/essays/$(basename "$TARGET_FILE" .md)/}"
 echo "Pushed. Verifying $LIVE_URL (up to 90s)..."
 for i in 1 2 3 4 5 6; do
   HTTP=$(curl -sS --max-time 20 -o /dev/null -w '%{http_code}' "$LIVE_URL" 2>/dev/null || echo "000")
