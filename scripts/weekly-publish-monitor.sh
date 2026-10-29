@@ -34,7 +34,21 @@ process.stdout.write(live.length ? live.sort().pop() : 'NONE');
 LIVE_DATE="$(node -e "
 const https = require('https');
 const s = require('$PROJ/strategy/PUBLISH-SCHEDULE.json');
-const byFile = Object.fromEntries(s.posts.map(p => [p.file.replace(/\.md$/, ''), p.publishDate]));
+const fs = require('fs');
+const path = require('path');
+// Map BOTH the schedule filename and the post's real permalink slug to its
+// publishDate. The homepage links real slugs (quarterly-identity-purple-team-
+// cadence) while the schedule stores tbd-essay-NN.md filenames, so a
+// filename-only map resolves to NONE forever and the monitor never settles.
+const bySlug = {};
+for (const p of s.posts) {
+  bySlug[p.file.replace(/\.md$/, '')] = p.publishDate;
+  try {
+    const src = fs.readFileSync(path.join('$PROJ', 'content', 'posts', p.file), 'utf8');
+    const m = src.match(/^permalink:\s*\/essays\/([^\/]+)\//m);
+    if (m) bySlug[m[1]] = p.publishDate;
+  } catch (e) {}
+}
 function fetchHtml(url) {
   return new Promise((resolve, reject) => {
     const req = https.get(url, { timeout: 12000 }, (res) => {
@@ -51,7 +65,7 @@ function fetchHtml(url) {
     const html = await fetchHtml('https://purpleteam.ai/');
     const m = html.match(/href=\"\\/essays\\/([^\\/]+)\\/\"/);
     if (!m) { process.stdout.write('NONE'); return; }
-    process.stdout.write(byFile[m[1]] || 'NONE');
+    process.stdout.write(bySlug[m[1]] || 'NONE');
   } catch (e) {
     process.stdout.write('NONE');
   }
