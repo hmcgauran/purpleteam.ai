@@ -56,6 +56,7 @@ expected_essays=(
   "essays/how-to-build-an-insider-risk-programme-that-actually-catches-the-bad-cases/"
   "essays/how-to-threat-model-a-system-you-have-never-seen-before/"
   "essays/what-a-good-ics-detection-looks-like-in-practice/"
+  "essays/ics-tabletop-exercises-lessons-dont-transfer/"
   "essays/purple-teaming-your-identity-environment/"
   "essays/containing-a-credential-driven-intrusion/"
   "essays/purple-teaming-a-pci-environment/"
@@ -101,6 +102,47 @@ for url in "${expected_essays[@]}"; do
     exit 1
   fi
 done
+
+echo "→ Checking internal links resolve to a built page"
+python3 <<'PY'
+import os, re, sys
+
+ROOT = "_site"
+
+# Every built directory with an index.html, as a site-root URL.
+pages = set()
+for dirpath, _dirnames, filenames in os.walk(ROOT):
+    if "index.html" in filenames:
+        rel = os.path.relpath(dirpath, ROOT).replace("\\", "/")
+        pages.add("/" if rel == "." else "/" + rel + "/")
+
+# Only check paths that are rendered as directories. Assets and feeds
+# (/feed.xml, /robots.txt, /assets/...) are files, not directory pages.
+def in_scope(url):
+    return url == "/" or url.startswith(("/essays/", "/tags/", "/about/"))
+
+href_re = re.compile(r'href="(/[^"#?]*)"')
+broken = []
+for dirpath, _dirnames, filenames in os.walk(ROOT):
+    for fn in filenames:
+        if not fn.endswith(".html"):
+            continue
+        path = os.path.join(dirpath, fn)
+        with open(path, encoding="utf-8", errors="ignore") as fh:
+            html = fh.read()
+        for link in href_re.findall(html):
+            if not in_scope(link):
+                continue
+            if link not in pages:
+                broken.append((os.path.relpath(path, ROOT), link))
+
+if broken:
+    print("✘ Broken internal links:")
+    for src, link in sorted(set(broken)):
+        print("   %s -> %s" % (src, link))
+    sys.exit(1)
+print("   all internal links resolve")
+PY
 
 essay_count=${#expected_essays[@]}
 echo "→ All checks passed. ${essay_count} essays verified."
