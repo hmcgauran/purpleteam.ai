@@ -394,6 +394,21 @@
         "Detection Engineering",
         "Programme Operations"
       ]
+    },
+    {
+      "id": "post-32",
+      "number": 32,
+      "title": "The Joins Nobody Owns: How Identity, Asset, and Rotation Registries Get Wired Together",
+      "file": "tbd-essay-32.md",
+      "publishDate": "2026-11-05",
+      "approved": true,
+      "tags": [
+        "Purple Teaming",
+        "Identity",
+        "Detection Engineering",
+        "Programme Operations",
+        "post"
+      ]
     }
   ]
 }
