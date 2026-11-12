@@ -409,6 +409,21 @@
         "Programme Operations",
         "post"
       ]
+    },
+    {
+      "id": "post-33",
+      "number": 33,
+      "title": "The Principals That Never Log In: Service Accounts, API Keys, and Revoking What Nobody Owns",
+      "file": "tbd-essay-33.md",
+      "publishDate": "2026-11-12",
+      "approved": true,
+      "tags": [
+        "Purple Teaming",
+        "Identity",
+        "Detection Engineering",
+        "Programme Operations",
+        "post"
+      ]
     }
   ]
 }

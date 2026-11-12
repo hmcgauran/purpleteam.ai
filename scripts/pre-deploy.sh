@@ -62,6 +62,7 @@ expected_essays=(
   "essays/purple-teaming-a-pci-environment/"
   "essays/quarterly-identity-purple-team-cadence/"
   "essays/the-joins-nobody-owns/"
+  "essays/the-principals-that-never-log-in/"
 )
 
 echo "→ Checking ${#expected_essays[@]} essay URLs"
