@@ -8,7 +8,7 @@ tags:
   - "Detection Engineering"
   - "Programme Operations"
   - post
-author: Hugh Mc Gauran
+author: Hugh McGauran
 excerpt: "The last essay ended by promising the next one would cover the principals in the model that never authenticate like a person. This is it: service accounts, API keys and the standing machine credentials that fill a join inventory once you build one, why their count is the least interesting number about them, and what it costs to revoke a credential when the thing it unlocks has no owner."
 layout: layouts/post.njk
 permalink: /essays/the-principals-that-never-log-in/
