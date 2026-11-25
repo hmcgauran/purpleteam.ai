@@ -439,6 +439,17 @@
         "Programme Operations",
         "post"
       ]
+    },
+    {
+      "id": "post-35",
+      "number": 35,
+      "title": "TBD — Essay #35",
+      "file": "tbd-essay-35.md",
+      "publishDate": "2026-12-03",
+      "approved": true,
+      "tags": [
+        "post"
+      ]
     }
   ]
 }
