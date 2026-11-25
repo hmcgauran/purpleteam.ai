@@ -50,9 +50,10 @@ echo "Project: $PROJ"
 
 WORK="$(mktemp -t pt-publish-XXXXXX)"
 NEXTFILE="$(mktemp -t pt-nextstub-XXXXXX)"
-trap 'rm -f "$WORK" "$NEXTFILE"' EXIT
+PREVIEWFILE="$(mktemp -t pt-preview-XXXXXX)"
+trap 'rm -f "$WORK" "$NEXTFILE" "$PREVIEWFILE"' EXIT
 
-export PROJ TODAY NEXT_THU NEXTFILE
+export PROJ TODAY NEXT_THU NEXTFILE PREVIEWFILE
 
 # ---------------------------------------------------------------------------
 # Step 1: decide the action. Exactly one line on stdout.
@@ -114,12 +115,47 @@ save();
 process.stdout.write(["BUMPED", p.id, p.publishDate, p.file].join(" ") + "\n");
 ' > "$WORK"
 
+# Slots queued for a future Thursday whose body still needs writing. The agent
+# writes those during the preview week, so it needs to be told which ones.
+node -e '
+const fs = require("fs");
+const path = require("path");
+const proj = process.env.PROJ;
+const today = process.env.TODAY;
+const schedPath = path.join(proj, "strategy", "PUBLISH-SCHEDULE.json");
+const sched = JSON.parse(fs.readFileSync(schedPath, "utf8"));
+const pending = [];
+for (const p of sched.posts) {
+  if (!p.approved || p.publishDate <= today) continue;
+  let body = "";
+  try {
+    const src = fs.readFileSync(path.join(proj, "content", "posts", p.file), "utf8");
+    const fmStart = src.indexOf("---") + 3;
+    const fmEnd = src.indexOf("\n---", fmStart);
+    body = fmEnd >= 0 ? src.slice(fmEnd + 4) : "";
+  } catch (e) {
+    body = "";
+  }
+  const norm = body.replace(/\s+/g, " ").trim().toLowerCase();
+  if (!norm || norm.startsWith("*placeholder. body to be written before")) {
+    pending.push(["PENDING_PREVIEW", p.id, p.publishDate, p.file].join(" "));
+  }
+}
+fs.writeFileSync(process.env.PREVIEWFILE, pending.join("\n"));
+' >/dev/null
+
 ACTION="$(awk '{print $1}' "$WORK")"
 TARGET_ID="$(awk '{print $2}' "$WORK")"
 TARGET_DATE="$(awk '{print $3}' "$WORK")"
 TARGET_FILE="$(awk '{print $4}' "$WORK")"
 
 echo "Action: $ACTION | $TARGET_ID | $TARGET_DATE | $TARGET_FILE"
+
+if [ -s "$PREVIEWFILE" ]; then
+  while IFS= read -r line; do
+    [ -n "$line" ] && echo "$line"
+  done < "$PREVIEWFILE"
+fi
 
 # ---------------------------------------------------------------------------
 # Step 2: mint the next slot.
@@ -226,15 +262,46 @@ build_and_gate() {
   fi
 }
 
-# Only the post being acted on is staged. A freshly minted placeholder stub
-# must never be staged, or it would be published as a live "TBD" page.
+# Stage the schedule, the URL list, and every post whose body is real. A
+# freshly minted placeholder stub must never be staged, or it would be
+# published as a live "TBD" page. A real body for a future slot IS staged:
+# that is the preview commit, and it must not be lost.
+# Keep the expected-URL list in step with every essay that has a real body,
+# not just the one being published. A preview body committed on the same tick
+# must reach the list too, or the next build gate misses it. Placeholder stubs
+# are skipped: their slug is a placeholder, not a published URL.
+sync_all_expected_urls() {
+  for f in content/posts/*.md; do
+    [ -f "$f" ] || continue
+    if grep -qi '^\*placeholder\. body to be written before' "$f"; then
+      continue
+    fi
+    sync_expected_url "$(basename "$f")"
+  done
+}
+
 stage_target() {
-  git add strategy/PUBLISH-SCHEDULE.json scripts/pre-deploy.sh "content/posts/$TARGET_FILE" || true
+  git add strategy/PUBLISH-SCHEDULE.json scripts/pre-deploy.sh || true
+  for f in content/posts/*.md; do
+    [ -f "$f" ] || continue
+    if grep -qi '^\*placeholder\. body to be written before' "$f"; then
+      continue
+    fi
+    git add "$f" || true
+  done
 }
 
 case "$ACTION" in
   MINT_STUB)
     mint_next_slot
+    # Commit the schedule entry for the new slot so it survives a clean
+    # checkout. The placeholder body is deliberately left uncommitted: a
+    # committed stub would publish a live "TBD" page.
+    git add strategy/PUBLISH-SCHEDULE.json
+    if ! git diff --cached --quiet; then
+      git commit -m "schedule: queue post for $NEXT_THU" >/dev/null
+      git push origin main 2>&1 | tail -3
+    fi
     echo "Minted stub post for $NEXT_THU — body needs to be written by then."
     exit 0
     ;;
@@ -243,7 +310,7 @@ case "$ACTION" in
     # A real body for a future date. Commit it as a preview so it is on disk,
     # built and reviewable, but leave the date alone: it publishes on its own
     # date, and bumping it here would publish a week early.
-    sync_expected_url "$TARGET_FILE"
+    sync_all_expected_urls
     build_and_gate
     stage_target
     if git diff --cached --quiet; then
@@ -293,7 +360,7 @@ if not re.search(r'^\s*-\s*post\s*$', src2, flags=re.MULTILINE):
 open(path, 'w').write(src2)
 PY
 
-sync_expected_url "$TARGET_FILE"
+sync_all_expected_urls
 build_and_gate
 stage_target
 
@@ -318,6 +385,15 @@ git push origin main 2>&1 | tail -3
 # ---------------------------------------------------------------------------
 mint_next_slot
 NEXT_LINE="$(cat "$NEXTFILE" 2>/dev/null || true)"
+if [ -n "$NEXT_LINE" ]; then
+  # Commit the new slot's schedule entry so the queue survives a clean
+  # checkout. The placeholder body stays uncommitted.
+  git add strategy/PUBLISH-SCHEDULE.json
+  if ! git diff --cached --quiet; then
+    git commit -m "schedule: queue the next post slot" >/dev/null
+    git push origin main 2>&1 | tail -3
+  fi
+fi
 
 # ---------------------------------------------------------------------------
 # Step 6: best-effort live URL verification (max 90s)

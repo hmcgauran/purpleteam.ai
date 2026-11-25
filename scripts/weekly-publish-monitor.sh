@@ -64,7 +64,9 @@ function localDate(d) {
   const day = String(d.getDate()).padStart(2, "0");
   return y + "-" + m + "-" + day;
 }
-const today = localDate(new Date());
+// Honour TODAY when set so the monitor can be tested and can never disagree
+// with the publish script about which day it is.
+const today = process.env.TODAY || localDate(new Date());
 
 // --- What the SCHEDULE says should be live today (unchanged semantics).
 const due = sched.posts
@@ -120,6 +122,29 @@ if (!candidates.length) {
   }
 }
 
+// --- Slots queued for a future Thursday that still have no real body. If any
+// exist, the agent has a body to write this week, so the monitor must not
+// sleep even when the primary branch looks like "nothing to do".
+const pendingPreviews = [];
+for (const p of sched.posts) {
+  if (!p.approved || p.publishDate <= today) continue;
+  let body = "";
+  let missing = false;
+  try {
+    const src = fs.readFileSync(path.join(proj, "content", "posts", p.file), "utf8");
+    const fmStart = src.indexOf("---") + 3;
+    const fmEnd = src.indexOf("\n---", fmStart);
+    body = fmEnd >= 0 ? src.slice(fmEnd + 4) : "";
+  } catch (e) {
+    body = "";
+    missing = true;
+  }
+  const norm = body.replace(/\s+/g, " ").trim().toLowerCase();
+  if (missing || !norm || norm.startsWith("*placeholder. body to be written before")) {
+    pendingPreviews.push(p.id);
+  }
+}
+
 // --- What the LIVE SITE shows as its newest essay.
 function fetchHtml(url) {
   return new Promise(function (resolve, reject) {
@@ -148,9 +173,21 @@ function fetchHtml(url) {
   //   SCHEDULED  - a seeded-ahead post with a real body, not due until its date
   //   BUMPED + IN-SYNC - already published, the live site agrees
   // Everything else is agent work: mint the stub, write the body, or publish.
-  const sleep = (action === "SCHEDULED") ||
-                (action === "BUMPED" && drift === "IN-SYNC");
-  process.stdout.write((sleep ? "MATCH " : "DIFF ") + out);
+  const sleep = pendingPreviews.length === 0 &&
+                ((action === "SCHEDULED") ||
+                 (action === "BUMPED" && drift === "IN-SYNC"));
+  const pending = pendingPreviews.length ? " pending=" + pendingPreviews.join(",") : "";
+
+  // The scheduler suppresses an agent run when the monitor output is byte-identical
+  // to the previous tick. A weekly cron that keeps reporting the same pending
+  // work would therefore be silenced after one tick and never get another
+  // chance to do it - the same deadlock in a different form. So whenever there
+  // is work to do, the output carries the current date: it stays deterministic
+  // for a given day (no timestamps, no run-time jitter) but changes from tick
+  // to tick, which is exactly the "something changed" signal the scheduler
+  // needs. A tick with nothing to do keeps a byte-stable output and sleeps.
+  const stamp = sleep ? "" : " today=" + today;
+  process.stdout.write((sleep ? "MATCH " : "DIFF ") + out + pending + stamp);
 })();
 ')"
 
