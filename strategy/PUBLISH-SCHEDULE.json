@@ -424,6 +424,21 @@
         "Programme Operations",
         "post"
       ]
+    },
+    {
+      "id": "post-34",
+      "number": 34,
+      "title": "The Principals Nobody Watches: Detecting Machine Credentials When There Is Nobody to Impersonate",
+      "file": "tbd-essay-34.md",
+      "publishDate": "2026-11-26",
+      "approved": true,
+      "tags": [
+        "Purple Teaming",
+        "Identity",
+        "Detection Engineering",
+        "Programme Operations",
+        "post"
+      ]
     }
   ]
 }
